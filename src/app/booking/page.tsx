@@ -7,7 +7,7 @@ export default async function Page() {
   const ticketsCounts = await GetCountTickets();
 
   return (
-    <main className="flex flex-col items-center justify-start h-screen w-full">
+    <main className="flex flex-col items-center justify-start  w-full">
       <Navigation />
       <Booking />
       <Footer />

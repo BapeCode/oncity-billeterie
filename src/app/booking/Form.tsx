@@ -257,58 +257,6 @@ export default function FormBooking({
               );
             })}
           </Tabs>
-          {/* {attendees.map((item, index) => {
-            return (
-              <div key={index} className="flex flex-col gap-4 w-full">
-                <div className="flex flex-row items-center gap-4 w-full">
-                  <div className="flex flex-col items-start flex-1 gap-2">
-                    <Label htmlFor="lastname" className="text-lg">
-                      Nom de famille
-                    </Label>
-                    <Input
-                      type="text"
-                      placeholder="Nom"
-                      className="w-full"
-                      name="lastname"
-                      value={item.lastName}
-                      id="lastname"
-                    />
-                  </div>
-
-                  <div className="flex flex-col items-start flex-1 gap-2">
-                    <Label htmlFor="firstname" className="text-lg">
-                      Prénom
-                    </Label>
-                    <Input
-                      type="text"
-                      placeholder="Prénom"
-                      className="w-full"
-                      name="firstname"
-                      value={item.firstName}
-                      id="firstname"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col items-start flex-1 gap-2">
-                  <Label htmlFor="email" className="text-lg">
-                    Email
-                  </Label>
-                  <Input
-                    type="text"
-                    placeholder="Email"
-                    className="w-full"
-                    name="email"
-                    value={item.email}
-                    onChange={(e) =>
-                      handleAttendeeChange(index, "email", e.target.value)
-                    }
-                    autoComplete="off"
-                    id="email"
-                  />
-                </div>
-              </div>
-            );
-          })} */}
         </div>
       )}
       <Button size={"lg"} className="w-full">

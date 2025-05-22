@@ -13,7 +13,7 @@ export default function Booking() {
 
   return (
     <Section className="h-full w-full">
-      <div className="flex flex-col justify-start items-center gap-2 max-w-7xl mx-auto">
+      <div className="flex flex-col justify-start items-center gap-2 max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center w-full">
           <Link href={"/"}>
             <Button
@@ -22,12 +22,12 @@ export default function Booking() {
               size={"lg"}
             >
               <ArrowLeft className="h-6 w-6" />
-              <span className="ml-2">Retour à l'acceuil</span>
+              <span>Retour à l'acceuil</span>
             </Button>
           </Link>
 
-          <span className="text-xl font-bold text-zinc-500">
-            Réservation de votre place
+          <span className="text-lg text-center md:text-right font-bold text-zinc-500">
+            Réservation
           </span>
         </div>
 
