@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import InformationsForm from "./InformationsForm";
 
 interface Attendee {
   firstName: string;
@@ -26,19 +26,6 @@ export default function FormBooking({
   const [attendees, setAttendees] = useState<Attendee[]>([
     { firstName: "", lastName: "", email: "" },
   ]);
-
-  const formatPhone = (value: string) => {
-    const numbers = value.replace(/[^\d]/g, "");
-    const limiteNumbers = numbers.slice(0, 10);
-    const formatted = limiteNumbers.replace(/(\d{2})(?=\d)/g, "$1 ");
-
-    return formatted;
-  };
-
-  const HandlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formtedPhone = formatPhone(e.target.value);
-    setPhone(formtedPhone);
-  };
 
   const HandleAddQuantity = () => {
     setQuantity(quantity + 1 > 5 ? 5 : quantity + 1);
@@ -60,14 +47,15 @@ export default function FormBooking({
   };
 
   useEffect(() => {
-    if (quantity > attendees.length) {
+    const additionalParticipants = quantity - 1;
+    if (additionalParticipants > attendees.length) {
       const newAttendees = [...attendees];
-      for (let i = attendees.length; i < quantity; i++) {
+      for (let i = attendees.length; i < additionalParticipants; i++) {
         newAttendees.push({ firstName: "", lastName: "", email: "" });
       }
       setAttendees(newAttendees);
-    } else if (quantity < attendees.length) {
-      setAttendees(attendees.slice(0, quantity));
+    } else if (additionalParticipants < attendees.length) {
+      setAttendees(attendees.slice(0, additionalParticipants));
     }
   }, [quantity]);
 
@@ -111,64 +99,8 @@ export default function FormBooking({
           Veuillez remplir le formulaire ci-dessous pour réserver votre place.
         </span>
       </div>
-      <form className="flex flex-col w-full gap-4">
-        <div className="flex flex-row items-center gap-4 w-full">
-          <div className="flex flex-col items-start flex-1 gap-2">
-            <Label htmlFor="lastname" className="text-lg">
-              Nom de famille
-            </Label>
-            <Input
-              type="text"
-              placeholder="Nom"
-              className="w-full"
-              name="lastname"
-              id="lastname"
-            />
-          </div>
 
-          <div className="flex flex-col items-start flex-1 gap-2">
-            <Label htmlFor="firstname" className="text-lg">
-              Prénom
-            </Label>
-            <Input
-              type="text"
-              placeholder="Prénom"
-              className="w-full"
-              name="firstname"
-              id="firstname"
-            />
-          </div>
-        </div>
-        <div className="flex flex-col items-start flex-1 gap-2">
-          <Label htmlFor="email" className="text-lg">
-            Email
-          </Label>
-          <Input
-            type="text"
-            placeholder="Email"
-            className="w-full"
-            name="email"
-            autoComplete="off"
-            id="email"
-          />
-        </div>
-        <div className="flex flex-col items-start flex-1 gap-2">
-          <Label htmlFor="phone" className="text-lg">
-            Téléphone
-          </Label>
-          <Input
-            type="tel"
-            placeholder="06 XX XX XX XX"
-            className="w-full"
-            value={phone}
-            onChange={HandlePhoneChange}
-            maxLength={14}
-            name="email"
-            autoComplete="off"
-            id="phone"
-          />
-        </div>
-      </form>
+      <InformationsForm attendees={attendees} quantity={quantity} />
 
       {quantity > 1 && (
         <div className="flex flex-col items-center w-full py-4 gap-4">
@@ -189,7 +121,7 @@ export default function FormBooking({
             className="w-full"
           >
             <TabsList className="mb-4 flex flex-wrap w-full">
-              {Array.from({ length: quantity }, (_, i) => (
+              {Array.from({ length: quantity - 1 }, (_, i) => (
                 <TabsTrigger key={i} value={(i + 1).toString()}>
                   Participant {i + 1}
                 </TabsTrigger>
@@ -259,9 +191,6 @@ export default function FormBooking({
           </Tabs>
         </div>
       )}
-      <Button size={"lg"} className="w-full">
-        Confirmée pour réserver ma place
-      </Button>
       <Separator />
     </div>
   );

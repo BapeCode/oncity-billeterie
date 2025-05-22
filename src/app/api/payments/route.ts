@@ -1,11 +1,34 @@
+import { prisma } from "@/libs/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { email, amount } = await req.json();
+  const { firstName, lastName, email, phone, quantity, attendees } =
+    await req.json();
 
-  const auth = Buffer.from(process.env.PAYPLUG_SECRET_KEY + ":").toString(
-    "base64"
-  );
+  const allParticipants = [
+    {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+    },
+    ...attendees.map((p: any) => ({
+      firstName: p.firstName,
+      lastName: p.lastName,
+      email: p.email,
+      phone: p.phone,
+    })),
+  ];
+
+  const order = await prisma.order.create({
+    data: {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      attendees: JSON.stringify(allParticipants),
+    },
+  });
 
   const res = await fetch("https://api.payplug.com/v1/payments", {
     method: "POST",
@@ -14,22 +37,35 @@ export async function POST(req: Request) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      amount: amount * 100,
+      amount: quantity * 4500,
       currency: "EUR",
-      customer: { email },
-      hosted_payment: {
-        return_url: "http://localhost:3000/merci",
+      customer: {
+        first_name: firstName,
+        last_name: lastName,
+        phone_number: phone,
+        email: email,
       },
-      notification_url: "http://localhost:3000/api/payments/webhook",
+      hosted_payment: {
+        return_url:
+          process.env.URL_PUBLIC + `confirm/success?orderId=${order.id}`,
+      },
     }),
   });
 
-  const data = await res.json();
+  const payment = await res.json();
 
-  if (!res.ok) {
-    console.error(data);
-    return NextResponse.json({ error: "Erreur PayPlug" }, { status: 500 });
-  }
+  await prisma.payment.create({
+    data: {
+      providerId: payment.id,
+      status: payment.is_paid ? "paid" : "pending",
+      amount: payment.amount,
+      order: {
+        connect: {
+          id: order.id,
+        },
+      },
+    },
+  });
 
-  return NextResponse.json({ url: data.hosted_payment.payment_url });
+  return NextResponse.json({ url: payment.hosted_payment.payment_url });
 }

@@ -4,7 +4,7 @@ import Section from "@/components/layout/Section";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import FormBooking from "./Form";
+import FormBooking from "./Informations";
 import Overview from "./Overview";
 import { useState } from "react";
 

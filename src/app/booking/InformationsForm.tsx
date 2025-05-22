@@ -1,0 +1,122 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { redirect } from "next/navigation";
+import { toast } from "sonner";
+
+export default function InformationsForm({
+  attendees,
+  quantity,
+}: {
+  attendees: { firstName: string; lastName: string; email: string }[];
+  quantity: number;
+}) {
+  const validateAttendees = () => {
+    return attendees.every(
+      (attendee) =>
+        attendee.firstName.trim() !== "" &&
+        attendee.lastName.trim() !== "" &&
+        attendee.email.trim() !== ""
+    );
+  };
+
+  const HandleSubmit = async (formData: FormData) => {
+    const firstName = formData.get("firstname");
+    const lastName = formData.get("lastname");
+    const email = formData.get("email");
+    const phone = formData.get("phone");
+
+    if (!firstName || !lastName || !email || !phone) {
+      toast.error("Veuillez remplir tous les champs dans les informations");
+      return;
+    }
+
+    if (quantity > 1 && !validateAttendees()) {
+      toast.error("Veuillez remplir tous les champs pour chaque participant");
+      return;
+    }
+
+    const res = await fetch("/api/payments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        phone,
+        quantity,
+        attendees,
+      }),
+    });
+
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+    else toast.error("Erreur lors du paiement");
+  };
+
+  return (
+    <form action={HandleSubmit} className="flex flex-col w-full gap-4">
+      <div className="flex flex-row items-center gap-4 w-full">
+        <div className="flex flex-col items-start flex-1 gap-2">
+          <Label htmlFor="lastname" className="text-lg">
+            Nom de famille
+          </Label>
+          <Input
+            type="text"
+            placeholder="Nom"
+            className="w-full"
+            name="lastname"
+            id="lastname"
+          />
+        </div>
+
+        <div className="flex flex-col items-start flex-1 gap-2">
+          <Label htmlFor="firstname" className="text-lg">
+            Prénom
+          </Label>
+          <Input
+            type="text"
+            placeholder="Prénom"
+            className="w-full"
+            name="firstname"
+            id="firstname"
+          />
+        </div>
+      </div>
+      <div className="flex flex-col items-start flex-1 gap-2">
+        <Label htmlFor="email" className="text-lg">
+          Email
+        </Label>
+        <Input
+          type="text"
+          placeholder="Email"
+          className="w-full"
+          name="email"
+          autoComplete="off"
+          id="email"
+        />
+      </div>
+      <div className="flex flex-col items-start flex-1 gap-2">
+        <Label htmlFor="phone" className="text-lg">
+          Téléphone
+        </Label>
+        <Input
+          type="tel"
+          placeholder="06 XX XX XX XX"
+          className="w-full"
+          maxLength={10}
+          name="phone"
+          autoComplete="off"
+          id="phone"
+        />
+      </div>
+      <Button size={"lg"} className="w-full" type="submit">
+        Confirmée pour réserver ma place
+      </Button>
+    </form>
+  );
+}

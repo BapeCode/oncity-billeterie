@@ -15,3 +15,17 @@ export const GetCountTickets = actionClient.action(async () => {
       error: "Erreur, vous avez déjà réservé 200 places",
     };
 });
+
+export const GetTickets = actionClient.action(async () => {
+  const res = await prisma.participant.count();
+
+  if (res < 200) {
+    return {
+      success: true,
+    };
+  } else {
+    return {
+      error: "Erreur, vous avez déjà réservé 200 places",
+    };
+  }
+});
