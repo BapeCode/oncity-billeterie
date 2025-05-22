@@ -7,6 +7,7 @@ import { CheckCircle, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
+import Link from "next/link";
 
 export default function SuccessPage() {
   const searchParams = useSearchParams();
@@ -59,56 +60,78 @@ export default function SuccessPage() {
       const ticket = qrCode[i];
       if (i > 0) doc.addPage();
 
-      // Background blanc
+      // Fond
       doc.setFillColor(255, 255, 255);
       doc.rect(0, 0, 210, 297, "F");
 
-      // Soirée
-      doc.setTextColor(217, 183, 90); // #d9b75a
+      // En-tête
+      doc.setTextColor(217, 183, 90); // or
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(22);
-      doc.text("Soirée blanche", 20, 30);
+      doc.setFontSize(24);
+      doc.text("Soirée Blanche – OnCity x Lyon 6e", 105, 30, {
+        align: "center",
+      });
 
-      doc.setTextColor(113, 113, 123); // #71717b
-      doc.setFontSize(12);
-      doc.text(`ID Commande : ${order.id}`, 20, 36);
-      doc.text(`${order.payment.amount / 100}€`, 20, 42);
+      doc.setFontSize(14);
+      doc.text("Mardi 17 Juin 2025 – 19h30", 105, 40, { align: "center" });
 
-      doc.setFontSize(16);
-      doc.setTextColor(217, 183, 90);
-      doc.text("Mardi 17 Juin 2025 - 19:30", 120, 30);
-
-      // Nom complet du ticket
-      doc.setFontSize(20);
+      // Infos participant
       doc.setTextColor(0, 0, 0);
-      doc.setFont("helvetica", "bold");
-      doc.text(ticket.name, 105, 90, { align: "center" });
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.text(`ID Commande : ${order.id}`, 20, 55);
+      doc.text(`Participant : ${ticket.name}`, 20, 63);
+      doc.text(`Montant : ${order.payment.amount / 100} €`, 20, 71);
+      doc.text(
+        `Lieu : Café du pond, 11 Pl. Maréchal Lyautey, 69006 Lyon`,
+        20,
+        79
+      );
 
       // QR Code
-      doc.addImage(ticket.qr, "PNG", 165, 60, 30, 30);
+      doc.addImage(ticket.qr, "PNG", 150, 55, 40, 40);
+      doc.setFontSize(10);
+      doc.text("Présentez ce QR Code à l’entrée", 170, 97, { align: "center" });
+
+      // Détails de l’événement
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      doc.text("Inclus avec votre billet :", 20, 105);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      const inclus = [
+        "Accès à la soirée privée",
+        "Une boisson offerte",
+        "Accès au buffet dinatoire",
+        "Participation aux concours de pétanque & élégance",
+      ];
+      inclus.forEach((line, idx) => {
+        doc.text(line, 25, 115 + idx * 8);
+      });
 
       // Conditions
-      doc.setFillColor(197, 197, 197);
-      doc.rect(0, 220, 210, 60, "F");
-      doc.setTextColor(0, 0, 0);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(10);
-      doc.text("Conditions d’utilisation", 10, 230);
+      doc.setFontSize(13);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Conditions d’utilisation :", 20, 155);
 
-      const conditions = [
-        "Ce ticket est personnel, non remboursable, non échangeable.",
-        "L’accès est contrôlé à l’entrée via code QR.",
-        "Une tenue blanche est requise. Aucun animal accepté.",
-        "Ce billet donne accès à un bracelet, une boisson, un buffet et deux concours.",
-        "L’organisateur se réserve le droit de refuser l’entrée en cas de non-respect.",
-      ];
-
-      let y = 236;
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
-      conditions.forEach((line) => {
-        doc.text(line, 10, y);
-        y += 6;
+      doc.setFontSize(10);
+
+      const conditionsText =
+        "Ce billet est strictement personnel, non remboursable et non échangeable. L’accès à l’événement est soumis à la présentation du QR code unique figurant sur ce document. Une tenue vestimentaire blanche est exigée pour l’ensemble des participants. L’accès pourra être refusé à toute personne ne respectant pas le dress code ou les règles de sécurité en vigueur. Les animaux ne sont pas autorisés sur le lieu de l’événement. L’organisateur se réserve le droit d’admission sans avoir à en justifier les raisons. En cas d’annulation indépendante de la volonté de l’organisateur, aucun remboursement ne pourra être exigé.";
+
+      const splitText = doc.splitTextToSize(conditionsText, 170);
+      doc.text(splitText, 20, 163);
+
+      // Footer
+      doc.setFillColor(15, 42, 39); // vert foncé
+      doc.rect(0, 285, 210, 12, "F");
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(10);
+      doc.text("www.soireeblanche.com – Powered by OnCity", 105, 292, {
+        align: "center",
       });
     }
 
@@ -230,6 +253,10 @@ export default function SuccessPage() {
             </Button>
           )}
         </div>
+
+        <Link href={"/"}>
+          <Button variant={"ghost"}>Retour à la page d'accueil</Button>
+        </Link>
       </div>
     </Section>
   );

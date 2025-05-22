@@ -25,6 +25,11 @@ export default function Heros() {
               Réserver ma place
             </Button>
           </Link>
+          <Link href={"/my-tickets"} className="block md:hidden">
+            <Button size={"lg"} className="text-lg" variant={"link"}>
+              Mes places
+            </Button>
+          </Link>
           <Button size={"lg"} className="text-lg" variant={"outline"}>
             En savoir plus
           </Button>

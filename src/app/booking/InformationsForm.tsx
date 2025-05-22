@@ -53,9 +53,13 @@ export default function InformationsForm({
       }),
     });
 
-    const data = await res.json();
-    if (data.url) window.location.href = data.url;
-    else toast.error("Erreur lors du paiement");
+    if (res.ok) {
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+      else toast.error("Erreur lors du paiement");
+    } else {
+      toast.error("Erreur lors de la réservation. Plus de places disponibles");
+    }
   };
 
   return (

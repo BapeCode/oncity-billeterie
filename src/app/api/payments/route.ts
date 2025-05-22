@@ -20,15 +20,29 @@ export async function POST(req: Request) {
     })),
   ];
 
-  const order = await prisma.order.create({
-    data: {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      attendees: JSON.stringify(allParticipants),
-    },
+  const participantToAddCount = allParticipants.length;
+
+  const result = await prisma.$transaction(async (tx) => {
+    const totalParticipants = await tx.participant.count();
+
+    if (totalParticipants + participantToAddCount > 2) {
+      throw new Error("PLACES_LIMIT_REACHED");
+    }
+
+    const order = await tx.order.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        phone,
+        attendees: JSON.stringify(allParticipants),
+      },
+    });
+
+    return { order };
   });
+
+  const order = result.order;
 
   const res = await fetch("https://api.payplug.com/v1/payments", {
     method: "POST",
