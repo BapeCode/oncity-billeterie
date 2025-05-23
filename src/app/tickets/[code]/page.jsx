@@ -4,7 +4,7 @@ import { CheckCircle, X } from "lucide-react";
 import { GetCodeQR } from "@/app/action.action";
 import ButtonValidate from "./buttonValidate";
 
-export default async function Page({ params }: { params: { code: string } }) {
+export default async function Page({ params }) {
   const { code } = await params;
   const codeQR = await GetCodeQR({ code });
 

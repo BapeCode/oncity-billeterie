@@ -5,12 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-export default async function Page({
-  params,
-}: {
-  params: { paymentNumber: string };
-}) {
-  const { paymentNumber } = await params;
+export default async function Page({ params }) {
+  const { paymentNumber } = params;
   if (!paymentNumber) {
     return null;
   }
@@ -39,7 +35,7 @@ export default async function Page({
             </span>
 
             <div className="flex flex-row items-center justify-center flex-wrap w-full gap-2">
-              {res?.data?.qrcode?.map((qrcode: any, index: number) => (
+              {res?.data?.qrcode?.map((qrcode, index) => (
                 <div
                   key={index}
                   className="flex flex-col items-center border border-border p-4 rounded-md cursor-pointer"
