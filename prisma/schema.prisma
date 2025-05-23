@@ -25,6 +25,7 @@ model Order {
   payment     Payment?      @relation(fields: [paymentId], references: [id])
   @@unique([paymentId])
   paymentId   Int?
+  accessToken String        @unique
 }
 
 model Payment {
@@ -58,8 +59,3 @@ model QRCodeTicket {
   @@unique([participantId])
   participantId Int?
 }
-
-
-// pnpx prisma format
-// pnpx prisma generate
-// pnpx prisma migrate dev --name add-payment-order

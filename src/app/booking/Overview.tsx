@@ -55,6 +55,17 @@ export default function Overview({ quantity }: { quantity: number }) {
         </div>
       </div>
       <Separator />
+      <div className="flex flex-col items-center w-full py-4 gap-2">
+        <span className="text-primary font-bold text-xl">
+          En cas de problème
+        </span>
+        <span className="text-zinc-600 text-sm text-center">
+          Veuillez nous contacter à l'adresse suivante : <br />
+          <strong>hello@oncity.fr</strong> <br />
+          ou par téléphone :<br />
+          <strong>06.19.45.38.26</strong>
+        </span>
+      </div>
     </div>
   );
 }

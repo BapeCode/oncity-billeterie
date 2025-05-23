@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Section from "@/components/layout/Section";
-import { CheckCircle, Download } from "lucide-react";
+import { CheckCircle, Download, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
@@ -11,14 +11,14 @@ import Link from "next/link";
 
 export default function SuccessPage() {
   const searchParams = useSearchParams();
-  const orderId = searchParams.get("orderId");
+  const token = searchParams.get("token");
   const [order, setOrder] = useState<any | null>(null);
   const [qrCode, setQrCode] = useState<any[]>([]);
 
   useEffect(() => {
-    if (!orderId) return;
+    if (!token) return;
 
-    fetch(`/api/confirm-payments?orderId=${orderId}`)
+    fetch(`/api/confirm-payments?token=${token}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -30,13 +30,13 @@ export default function SuccessPage() {
       .catch((err) => {
         console.error("Erreur API:", err);
       });
-  }, [orderId]);
+  }, [token]);
 
-  const handleGenerateTickets = async (orderId: number) => {
+  const handleGenerateTickets = async (token: string) => {
     const res = await fetch("/api/generate-tickets", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ orderId }),
+      body: JSON.stringify({ token }),
     });
     if (res.ok) {
       const data = await res.json();
@@ -120,7 +120,7 @@ export default function SuccessPage() {
       doc.setFontSize(10);
 
       const conditionsText =
-        "Ce billet est strictement personnel, non remboursable et non échangeable. L’accès à l’événement est soumis à la présentation du QR code unique figurant sur ce document. Une tenue vestimentaire blanche est exigée pour l’ensemble des participants. L’accès pourra être refusé à toute personne ne respectant pas le dress code ou les règles de sécurité en vigueur. Les animaux ne sont pas autorisés sur le lieu de l’événement. L’organisateur se réserve le droit d’admission sans avoir à en justifier les raisons. En cas d’annulation indépendante de la volonté de l’organisateur, aucun remboursement ne pourra être exigé.";
+        "Ce billet est strictement personnel, non remboursable et non échangeable. L’accès à l’événement est soumis à la présentation du QR code unique figurant sur ce document. Une tenue vestimentaire blanche est exigée pour l’ensemble des participants. L’accès pourra être refusé à toute personne ne respectant pas le dress code ou les règles de sécurité en vigueur. Les animaux ne sont pas autorisés sur le lieu de l’événement. L’organisateur se réserve le droit d’admission sans avoir à en justifier les raisons. En cas d’annulation indépendante de la volonté de l’organisateur, aucun remboursement ne pourra être exigé. \nLa vente d’alcool est strictement interdite aux mineurs de moins de 18 ans. Une pièce d’identité pourra être exigée. L’abus d’alcool est dangereux pour la santé, à consommer avec modération. Toute personne en état d’ébriété manifeste pourra se voir refuser l’entrée ou être exclue de l’événement, sans possibilité de remboursement. Des contrôles de sécurité peuvent être effectués à l’entrée. Les objets interdits ou dangereux seront systématiquement confisqués.";
 
       const splitText = doc.splitTextToSize(conditionsText, 170);
       doc.text(splitText, 20, 163);
@@ -141,72 +141,69 @@ export default function SuccessPage() {
   if (!order) return null;
 
   return (
-    <Section className="flex items-center justify-center w-full h-screen">
-      <div className="flex flex-col items-center justify-start w-full h-full gap-2">
-        <CheckCircle className="h-15 w-15 text-green-500" />
-        <span className="text-3xl font-bold text-black">Paiement validé</span>
-        <span className="text-lg font-medium text-zinc-500">
-          Merci pour votre achat et votre confiance. Votre place a bien été
-          réservée.
-        </span>
+    <Section className="flex items-start justify-center w-full h-screen p-4 overflow-y-auto">
+      <div className="flex flex-col items-center gap-2 max-w-2xl mx-auto">
+        {!order ? (
+          <X className="h-15 w-15 text-red-500 text-center" />
+        ) : (
+          <CheckCircle className="h-15 w-15 text-green-500 text-center" />
+        )}
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-xl md:text-3xl font-bold text-black text-center">
+            Paiement validé
+          </span>
+          <span className="text-md md:text-lg font-medium text-zinc-500 text-center">
+            Merci pour votre achat et votre confiance. Votre place a bien été
+            réservée.
+          </span>
+        </div>
 
-        <div className="flex flex-col items-center justify-start p-6 border-border border rounded-md mt-5 gap-4">
+        <div className="flex flex-col items-center p-6 border rounded-md mt-5 gap-4 w-full">
           <div className="flex flex-col items-center">
             <span className="text-lg font-bold">Résumé de la commande</span>
-            <span className="text-md font-medium text-zinc-500">
+            <span className="text-md font-medium text-zinc-500 text-center">
               Vous pouvez retrouver le récapitulatif de votre commande
               ci-dessous.
             </span>
           </div>
 
           <ul className="flex flex-col items-center w-full">
-            <li className="flex items-center justify-between gap-2 w-full">
-              <span className="text-md font-medium text-black">
-                Numéro de la commande :
+            <li className="flex flex-col md:flex-row items-center md:justify-between md:w-full gap-2">
+              <span className="text-md font-bold text-black">
+                Numéro de commande :
               </span>
               <span className="text-md font-medium text-zinc-600">
-                {orderId ? orderId : "N/A"}
+                {order.id}
               </span>
             </li>
-
-            <li className="flex items-center justify-between gap-2 w-full">
-              <span className="text-md font-medium text-black">
+            <li className="flex flex-col md:flex-row items-center md:justify-between md:w-full gap-2">
+              <span className="text-md font-bold text-black">
                 Numéro de paiement :
               </span>
               <span className="text-md font-medium text-zinc-600">
-                {order.payment.providerId ? order.payment.providerId : "N/A"}
+                {order.payment.providerId}
               </span>
             </li>
-
-            <li className="flex items-center justify-between gap-2 w-full">
-              <span className="text-md font-medium text-black">
+            <li className="flex flex-col md:flex-row items-center md:justify-between md:w-full gap-2">
+              <span className="text-md font-bold text-black">
                 Nom et Prénom :
               </span>
               <span className="text-md font-medium text-zinc-600">
                 {order.lastName.toUpperCase()} {order.firstName}
               </span>
             </li>
+            <li className="flex flex-col md:flex-row items-center md:justify-between md:w-full gap-2">
+              <span className="text-md font-bold text-black">Billet(s)</span>
 
-            <li className="flex items-center justify-between gap-2 w-full">
-              <span className="text-md font-medium text-black">Billet(s)</span>
               <span className="text-md font-medium text-zinc-600">
                 {order.attendees ? JSON.parse(order.attendees).length : 0}
               </span>
             </li>
+            <li className="flex flex-col md:flex-row items-center md:justify-between md:w-full gap-2">
+              <span className="text-md font-bold text-black">Prix TTC</span>
 
-            <li className="flex items-center justify-between gap-2 w-full">
-              <span className="text-md font-medium text-black">Soirée</span>
               <span className="text-md font-medium text-zinc-600">
-                Soirée OnCity & Lyon 6ème
-              </span>
-            </li>
-
-            <li className="flex items-center justify-between gap-2 w-full">
-              <span className="text-md font-medium text-black">Prix TTC</span>
-              <span className="text-md font-medium text-zinc-600">
-                {order.payment.amount
-                  ? order.payment.amount / 100 + ",00€"
-                  : "N/A"}
+                {order.payment.amount / 100 + ",00€"}
               </span>
             </li>
           </ul>
@@ -246,7 +243,7 @@ export default function SuccessPage() {
             <Button
               variant={"default"}
               className="w-full"
-              onClick={() => handleGenerateTickets(order.id)}
+              onClick={() => handleGenerateTickets(token || "")}
             >
               <Download className="h-5 w-5 mr-2" />
               Généré les billets

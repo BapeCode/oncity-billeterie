@@ -7,7 +7,7 @@ export default function Heros() {
     <Section className="flex flex-col items-center justify-center text-center w-full py-20 md:py-32">
       <div className="flex flex-col items-center justify-center text-center py-20 md:py-32 max-w-7xl mx-auto">
         <span className="text-4xl md:text-5xl font-bold text-primary">
-          Soirée blanche avec OnCity & Lyon 6ème
+          Soirée blanche avec Lyon 6ème & OnCity
         </span>
         <p className="text-zinc-400 text-2xl">
           Quand l'élégance rencontre l'atmosphère d'une nuit d'été

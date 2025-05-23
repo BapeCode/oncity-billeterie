@@ -10,11 +10,13 @@ const ticketId = () => {
 };
 
 export async function POST(req: Request) {
-  const { orderId } = await req.json();
+  const { token: token } = await req.json();
 
-  const order = await prisma.order.findUnique({
+  if (!token) return NextResponse.json("Invalid Order ID", { status: 400 });
+
+  const order = await prisma.order.findFirst({
     where: {
-      id: orderId,
+      accessToken: token,
     },
     include: {
       participants: {

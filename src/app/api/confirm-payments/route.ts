@@ -3,16 +3,25 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const orderId = parseInt(searchParams.get("orderId") || "", 10);
+  const token: string = searchParams.get("token") || "";
 
-  if (!orderId) return NextResponse.json("Invalid Order ID", { status: 400 });
+  if (!token) return NextResponse.json("Invalid Order ID", { status: 400 });
 
   const order = await prisma.order.findUnique({
-    where: {
-      id: orderId,
-    },
-    include: {
-      payment: true,
+    where: { accessToken: token },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      attendees: true,
+      payment: {
+        select: {
+          id: true,
+          providerId: true,
+          amount: true,
+          status: true,
+        },
+      },
     },
   });
 

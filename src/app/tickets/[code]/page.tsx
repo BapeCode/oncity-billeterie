@@ -1,36 +1,18 @@
 import Section from "@/components/layout/Section";
 import Navigation from "@/components/layout/Navigation";
-import { Button } from "@/components/ui/button";
 import { CheckCircle, X } from "lucide-react";
-import { GetCodeQR, ValidateTicket } from "@/app/action.action";
-import { toast } from "sonner";
+import { GetCodeQR } from "@/app/action.action";
 import ButtonValidate from "./buttonValidate";
 
 export default async function Page({ params }: { params: { code: string } }) {
   const { code } = await params;
   const codeQR = await GetCodeQR({ code });
 
-  const HandleValidate = async () => {
-    if (!codeQR?.data?.error) {
-      const res = await ValidateTicket({
-        code: codeQR?.data?.data?.ticket?.code ?? "",
-      });
-
-      if (res?.data?.success) {
-        return true;
-      } else {
-        return res?.data?.error;
-      }
-    } else {
-      return codeQR?.data?.error;
-    }
-  };
-
   return (
     <main className="flex flex-col items-center justify-start overflow-y-hidden w-full">
       <Navigation />
-      <Section className="flex items-center justify-center w-full h-full p-4">
-        <div className="flex flex-col items-center justify-start w-full h-full gap-4">
+      <Section className="flex items-center justify-center h-full p-4">
+        <div className="flex flex-col items-center justify-center w-full h-full gap-4">
           {codeQR?.data?.error ? (
             <X className="h-15 w-15 text-red-500" />
           ) : (
@@ -38,7 +20,7 @@ export default async function Page({ params }: { params: { code: string } }) {
           )}
           <h1 className="text-3xl font-bold text-black">Ticket valide</h1>
 
-          <div className="flex flex-col items-start gap-1 w-full">
+          <div className="flex flex-col items-center gap-1 w-full">
             <p className="text-lg font-medium text-zinc-600">
               Code du billet :
             </p>
@@ -46,7 +28,7 @@ export default async function Page({ params }: { params: { code: string } }) {
           </div>
 
           {!codeQR?.data?.error ? (
-            <div className="flex flex-col items-start gap-1 w-full">
+            <div className="flex flex-col items-center gap-1 w-full">
               <p className="text-lg font-medium text-zinc-600">
                 Nom et Prénom du billet :
               </p>
@@ -57,7 +39,7 @@ export default async function Page({ params }: { params: { code: string } }) {
               </p>
             </div>
           ) : (
-            <div className="flex flex-col items-start gap-1 w-full">
+            <div className="flex flex-col items-center gap-1 w-full">
               <p className="text-lg font-medium text-zinc-600">Message</p>
               <p className="text-md font-medium text-zinc-500">
                 {codeQR?.data?.error}

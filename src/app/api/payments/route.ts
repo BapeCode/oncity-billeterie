@@ -1,5 +1,6 @@
 import { prisma } from "@/libs/prisma";
 import { NextResponse } from "next/server";
+import { customAlphabet } from "nanoid";
 
 export async function POST(req: Request) {
   const { firstName, lastName, email, phone, quantity, attendees } =
@@ -22,12 +23,17 @@ export async function POST(req: Request) {
 
   const participantToAddCount = allParticipants.length;
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx: any) => {
     const totalParticipants = await tx.participant.count();
 
-    if (totalParticipants + participantToAddCount > 2) {
+    if (totalParticipants + participantToAddCount > 200) {
       throw new Error("PLACES_LIMIT_REACHED");
     }
+
+    const generateAccessToken = customAlphabet(
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+      32
+    );
 
     const order = await tx.order.create({
       data: {
@@ -36,6 +42,7 @@ export async function POST(req: Request) {
         email,
         phone,
         attendees: JSON.stringify(allParticipants),
+        accessToken: generateAccessToken(),
       },
     });
 
@@ -61,7 +68,7 @@ export async function POST(req: Request) {
       },
       hosted_payment: {
         return_url:
-          process.env.URL_PUBLIC + `confirm/success?orderId=${order.id}`,
+          process.env.URL_PUBLIC + `confirm/success?token=${order.accessToken}`,
       },
     }),
   });

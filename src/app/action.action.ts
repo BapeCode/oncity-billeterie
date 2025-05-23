@@ -2,10 +2,15 @@
 
 import { actionClient } from "@/lib/safe-action";
 import { prisma } from "@/libs/prisma";
+import QRCode from "qrcode";
 import z from "zod";
 
 const QRCodeSchema = z.object({
   code: z.string(),
+});
+
+const GetTicketsByPaymentIdSchema = z.object({
+  paymentNumber: z.string(),
 });
 
 export const GetCountTickets = actionClient.action(async () => {
@@ -100,5 +105,65 @@ export const ValidateTicket = actionClient
     return {
       success: true,
       data: res,
+    };
+  });
+
+export const GetTicketsByPaymentId = actionClient
+  .schema(GetTicketsByPaymentIdSchema)
+  .action(async ({ parsedInput: { paymentNumber } }) => {
+    if (!paymentNumber)
+      return {
+        error: "Aucun numéro de paiement trouver",
+      };
+
+    const res = await prisma.payment.findFirst({
+      where: {
+        providerId: paymentNumber,
+      },
+      include: {
+        order: {
+          select: {
+            firstName: true,
+            lastName: true,
+            accessToken: true,
+            participants: {
+              select: {
+                firstName: true,
+                lastName: true,
+                ticket: {
+                  select: {
+                    code: true,
+                    used: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    let qrcode: any[] = [];
+
+    for (const item of res?.order?.participants ?? []) {
+      const qrURL = await QRCode.toDataURL(
+        `${process.env.URL_PUBLIC}tickets/${item.ticket?.code}`
+      );
+      qrcode.push({
+        name: `${item.firstName} ${item.lastName}`,
+        url: qrURL,
+        used: item.ticket?.used,
+      });
+    }
+
+    if (!res)
+      return {
+        error: "Aucun paiement trouvé",
+      };
+
+    return {
+      success: true,
+      data: res,
+      qrcode: qrcode,
     };
   });

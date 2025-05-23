@@ -12,7 +12,7 @@ export default function Booking() {
   const [quantity, setQuantity] = useState(1);
 
   return (
-    <Section className="h-full w-full">
+    <Section className="md:h-full md:w-full">
       <div className="flex flex-col justify-start items-center gap-2 max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center w-full">
           <Link href={"/"}>

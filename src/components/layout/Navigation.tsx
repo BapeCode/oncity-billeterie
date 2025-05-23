@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
+import ModalTickets from "./modal";
 
 export default function Navigation() {
   return (
@@ -9,11 +10,15 @@ export default function Navigation() {
           href={"/"}
           className="flex items-center justify-center w-full md:w-auto gap-4"
         >
-          <img src="/logo.png" alt="logo" className="h-20 w-auto" />
-          <img src={"/logo-lyon-6.png"} alt="logo" className="h-30 w-auto" />
+          <img
+            src={"/logo-lyon-6.jpg"}
+            alt="logo"
+            className="h-30 object-cover w-auto"
+          />
+          <img src="/logo.png" alt="logo" className="h-15 w-auto" />
         </Link>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4 px-6">
           <Link href={"/booking"}>
             <Button
               variant={"default"}
@@ -24,7 +29,9 @@ export default function Navigation() {
             </Button>
           </Link>
 
-          <Link href={"/my-tickets"}>
+          <ModalTickets />
+          {/* <Link href={"/my-tickets"}>
+          
             <Button
               variant={"outline"}
               className="cursor-pointer text-lg"
@@ -32,7 +39,7 @@ export default function Navigation() {
             >
               Mes billets
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </nav>
     </header>
