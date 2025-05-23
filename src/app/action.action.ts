@@ -68,6 +68,16 @@ export const ValidateTicket = actionClient
   .action(async ({ parsedInput: { code } }) => {
     if (!code) return { error: "Aucun QRCode trouver" };
 
+    const now = new Date();
+    const limitDate = new Date("2025-06-17T18:00:00+02:00");
+
+    if (now < limitDate) {
+      return {
+        error:
+          "La validation du buillet ne sera disponible qu'à partir du Mardi 17 Juin 2025.",
+      };
+    }
+
     const res = await prisma.participant.findFirst({
       where: {
         ticket: {
