@@ -8,9 +8,7 @@ import Link from "next/link";
 export default async function Page({
   params,
 }: {
-  params: {
-    paymentNumber: string;
-  };
+  params: { paymentNumber: string };
 }) {
   const { paymentNumber } = await params;
   if (!paymentNumber) {
