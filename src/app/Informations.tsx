@@ -70,7 +70,9 @@ export default function Informations() {
               <ul className="text-white flex flex-col items-start gap-2 w-full text-lg">
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                  <span>Une boisson de votre choix</span>
+                  <span>
+                    Une boisson de votre choix (verre de vin, bière, soft)
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
