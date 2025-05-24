@@ -119,7 +119,7 @@ export default function InformationsForm({
         />
       </div>
       <Button size={"lg"} className="w-full" type="submit">
-        Confirmée pour réserver ma place
+        Confirmer pour réserver ma place
       </Button>
     </form>
   );

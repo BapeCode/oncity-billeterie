@@ -5,10 +5,10 @@ export default function Overview({ quantity }: { quantity: number }) {
   return (
     <div className="flex flex-col items-start justify-start border border-border p-6 rounded-lg shadow-sm h-full">
       <span className="text-primary font-bold text-2xl">
-        Résumer de la commande
+        Résumé de la commande
       </span>
       <span className="text-neutral-400 font-bold text-md">
-        Soirée blanche avec OnCity et Lyon 6ème
+        Soirée blanche avec Lyon 6ème & OnCity
       </span>
 
       <div className="flex flex-col items-start mt-5 w-full">
@@ -24,7 +24,7 @@ export default function Overview({ quantity }: { quantity: number }) {
       <div className="flex flex-col items-start mt-5 w-full">
         <div className="flex items-center gap-2">
           <Clock className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold text-zinc-600">Horraire</span>
+          <span className="text-xl font-bold text-zinc-600">Horaire</span>
         </div>
         <span className="ml-8 font-medium text-zinc-500 text-lg">
           19:30 - 01:00

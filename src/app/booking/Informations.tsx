@@ -63,7 +63,7 @@ export default function FormBooking({
     <div className="flex flex-col items-start justify-start gap-4 w-full h-full">
       <div className="flex flex-col gap-2 items-start w-full">
         <span className="text-2xl text-primary font-bold">
-          Selection des places
+          Séléction des places
         </span>
         <div className="flex flex-row items-center justify-between w-full p-4 rounded-lg border border-border">
           <div className="flex flex-col items-start gap-2">
