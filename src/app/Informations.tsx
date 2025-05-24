@@ -15,7 +15,7 @@ export default function Informations() {
             hors du temps : la Soirée Blanche au Café du Pond. Une nuit pensée
             comme un écrin, où chaque détail compte, et où le raffinement
             devient la seule règle. Un concours de pétanque et un concours
-            d'élégance seront organisés, avec de très beau lot à la clé !
+            d'élégance seront organisés, avec de très beaux lots à la clé !
           </p>
 
           <ul className="text-white flex flex-col items-start gap-2 w-full text-md md:text-lg md:mt-5">
@@ -28,13 +28,13 @@ export default function Informations() {
             <li className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
               <span>
-                Horraire : <strong>de 19:30 à 01:00</strong>
+                Horaire : <strong>de 19:30 à 01:00</strong>
               </span>
             </li>
             <li className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
               <span>
-                Lieux :{" "}
+                Lieu :{" "}
                 <strong>
                   <Link
                     href={
@@ -87,7 +87,7 @@ export default function Informations() {
 
             <div className="w-full flex flex-col gap-2">
               <span className="text-2xl md:text-3xl font-bold text-primary">
-                Informations important
+                Informations importantes
               </span>
 
               <ul className="text-white flex flex-col items-start gap-2 w-full text-lg">
