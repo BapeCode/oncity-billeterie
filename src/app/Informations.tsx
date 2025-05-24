@@ -64,7 +64,7 @@ export default function Informations() {
           <div className="flex flex-col items-center gap-10 bg-white/5 p-6 rounded-lg border border-white/10 w-full">
             <div className="w-full flex flex-col gap-2">
               <span className="text-2xl text-left md:text-3xl font-bold text-primary">
-                Ce que comprends la réservation
+                Ce que comprend la réservation
               </span>
 
               <ul className="text-white flex flex-col items-start gap-2 w-full text-lg">
