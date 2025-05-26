@@ -193,7 +193,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                         return (
                           <TableRow key={orderIndex + orderIndex}>
                             <TableCell>{orderIndex + 1}</TableCell>
-                            <TableCell>{order.payment.providerId}</TableCell>
+                            <TableCell>{order.payment?.providerId}</TableCell>
                             <TableCell>{order.lastName}</TableCell>
                             <TableCell>{order.firstName}</TableCell>
                             <TableCell>
