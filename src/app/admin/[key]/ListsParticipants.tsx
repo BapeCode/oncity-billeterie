@@ -95,6 +95,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
 
                       {orders.map((order, orderIndex) => {
                         return order.participants.map((part, partIndex) => {
+                          console.log(part.ticket?.used);
                           return (
                             <TableRow key={orderIndex + partIndex}>
                               <TableCell>
@@ -104,11 +105,11 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                               <TableCell>{part.firstName}</TableCell>
                               <TableCell>{part.email}</TableCell>
                               <TableCell className="text-left">
-                                {part.ticket?.used
-                                  ? part.ticket?.used
+                                {part.ticket?.used !== undefined
+                                  ? part.ticket.used
                                     ? "Oui"
                                     : "Non"
-                                  : "Non généré"}
+                                  : "Non générer"}
                               </TableCell>
                               <TableCell className="text-left">
                                 {part.orderId}
