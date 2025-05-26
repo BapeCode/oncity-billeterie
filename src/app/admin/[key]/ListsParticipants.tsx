@@ -71,7 +71,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
         100,
         yPosition
       );
-      doc.text(part.phone, 150, yPosition);
+      doc.text(formatPhone(part.phone), 150, yPosition);
 
       yPosition += 8;
     });
@@ -116,7 +116,15 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
       doc.text(order.lastName, 40, yPosition);
       doc.text(order.firstName, 65, yPosition);
       doc.text(price.toString() + "€", 90, yPosition);
-      doc.text(order.payment?.status ? "Payé" : "En attente", 115, yPosition);
+      doc.text(
+        order.payment?.status !== undefined
+          ? order.payment.status === "paid"
+            ? "Payé"
+            : "En attente"
+          : "Paiement échoué",
+        115,
+        yPosition
+      );
       doc.text(formatTime(order.payment?.createdAt) || "N/A", 140, yPosition);
 
       yPosition += 8;
