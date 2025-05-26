@@ -4,8 +4,13 @@ import { actionClient } from "@/lib/safe-action";
 import { prisma } from "@/libs/prisma";
 import QRCode from "qrcode";
 import z from "zod";
-import { ticketId } from "./api/generate-tickets/route";
 
+const ticketId = () => {
+  return `OCL6-${Date.now()}-${Math.random()
+    .toString(36)
+    .substring(2, 8)
+    .toUpperCase()}`;
+};
 const QRCodeSchema = z.object({
   code: z.string(),
 });
