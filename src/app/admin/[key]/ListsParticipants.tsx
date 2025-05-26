@@ -193,18 +193,22 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                         return (
                           <TableRow key={orderIndex + orderIndex}>
                             <TableCell>{orderIndex + 1}</TableCell>
-                            <TableCell>{order.payment?.providerId}</TableCell>
+                            <TableCell>
+                              {order.payment?.providerId ?? "NA"}
+                            </TableCell>
                             <TableCell>{order.lastName}</TableCell>
                             <TableCell>{order.firstName}</TableCell>
                             <TableCell>
-                              {order.payment.amount / 100 + ",00€"}
+                              {order.payment?.amount
+                                ? order.payment?.amount / 100 + ",00€"
+                                : "NA"}
                             </TableCell>
                             <TableCell className="text-left">
-                              {order.payment.status === "paid" ? (
+                              {order.payment?.status === "paid" ? (
                                 <Badge className="bg-green-500 text-white">
                                   Paiement confirmé
                                 </Badge>
-                              ) : order.payment.status === "pending" ? (
+                              ) : order.payment?.status === "pending" ? (
                                 <Badge className="bg-yellow-500 text-white">
                                   Paiement en attente
                                 </Badge>
@@ -215,7 +219,9 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                               )}
                             </TableCell>
                             <TableCell className="text-right">
-                              {formatTime(order.payment.createdAt)}
+                              {order.payment?.createdAt
+                                ? formatTime(order.payment?.createdAt)
+                                : "NA"}
                             </TableCell>
                           </TableRow>
                         );
