@@ -104,7 +104,11 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                               <TableCell>{part.firstName}</TableCell>
                               <TableCell>{part.email}</TableCell>
                               <TableCell className="text-left">
-                                {part.ticket.used ? "Oui" : "Non"}
+                                {part.ticket?.used
+                                  ? part.ticket?.used
+                                    ? "Oui"
+                                    : "Non"
+                                  : "Non généré"}
                               </TableCell>
                               <TableCell className="text-left">
                                 {part.orderId}
