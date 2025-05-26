@@ -12,7 +12,7 @@ export default function Informations() {
           </span>
           <p className="text-md md:text-xl text-white text-left">
             Lyon 6ème vous donne rendez-vous le 17 juin 2025 pour un événement
-            hors du temps : la Soirée Blanche au Café du Pond. Une nuit pensée
+            hors du temps : la Soirée en blanc au Café du Pond. Une nuit pensée
             comme un écrin, où chaque détail compte, et où le raffinement
             devient la seule règle. Un concours de pétanque et un concours
             d'élégance seront organisés, avec de très beaux lots à la clé !
@@ -105,7 +105,7 @@ export default function Informations() {
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                  <span>Mineur nom admins</span>
+                  <span>Mineurs non admis</span>
                 </li>
               </ul>
             </div>

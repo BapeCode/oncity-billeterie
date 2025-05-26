@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,10 +21,109 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { formatTime } from "@/lib/format";
+import { formatPhone, formatTime } from "@/lib/format";
+import jsPDF from "jspdf";
 import { Download, File, Search } from "lucide-react";
 
 export default function ListParticipants({ orders }: { orders: any[] }) {
+  const exportParticipantsToPDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(20);
+    doc.text(
+      "Liste des Participants - Soirée en blanc Lyon 6ème OnCity",
+      20,
+      20
+    );
+
+    doc.setFontSize(10);
+    doc.text(`Exporté le: ${new Date().toLocaleDateString("fr-FR")}`, 20, 30);
+
+    doc.setFontSize(12);
+    doc.setFont(undefined, "bold");
+    let yPosition = 50;
+    doc.text("ID", 20, yPosition);
+    doc.text("Nom", 40, yPosition);
+    doc.text("Prénom", 70, yPosition);
+    doc.text("Email", 100, yPosition);
+    doc.text("Téléphone", 150, yPosition);
+
+    doc.line(20, yPosition + 2, 190, yPosition + 2);
+
+    doc.setFont(undefined, "normal");
+    doc.setFontSize(10);
+    yPosition += 10;
+
+    orders.forEach((part, index) => {
+      if (yPosition > 270) {
+        doc.addPage();
+        yPosition = 20;
+      }
+      const partIndex = index + 1;
+
+      doc.text(partIndex.toString(), 20, yPosition);
+      doc.text(part.lastName, 40, yPosition);
+      doc.text(part.firstName, 70, yPosition);
+      doc.text(
+        part.email.length > 20
+          ? part.email.substring(0, 20) + "..."
+          : part.email,
+        100,
+        yPosition
+      );
+      doc.text(part.phone, 150, yPosition);
+
+      yPosition += 8;
+    });
+
+    doc.save("liste_participants_soiree_blanche.pdf");
+  };
+
+  const exportFactureToPDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(20);
+    doc.text("Facture - Soirée en blanc Lyon 6ème OnCity", 20, 20);
+
+    doc.setFontSize(10);
+    doc.text(`Exporté le: ${new Date().toLocaleDateString("fr-FR")}`, 20, 30);
+
+    doc.setFontSize(12);
+    doc.setFont(undefined, "bold");
+    let yPosition = 80;
+    doc.text("ID", 20, yPosition);
+    doc.text("Nom", 40, yPosition);
+    doc.text("Prénom", 65, yPosition);
+    doc.text("Montant", 90, yPosition);
+    doc.text("Statut", 115, yPosition);
+    doc.text("Date", 140, yPosition);
+
+    doc.line(20, yPosition + 2, 190, yPosition + 2);
+    doc.setFont(undefined, "normal");
+    doc.setFontSize(10);
+    yPosition += 10;
+
+    orders.forEach((order, index) => {
+      if (yPosition > 270) {
+        doc.addPage();
+        yPosition = 20;
+      }
+
+      const orderIndex = index + 1;
+      const price = order.payment?.amount / 100;
+
+      doc.text(orderIndex.toString(), 20, yPosition);
+      doc.text(order.lastName, 40, yPosition);
+      doc.text(order.firstName, 65, yPosition);
+      doc.text(price.toString() + "€", 90, yPosition);
+      doc.text(order.payment?.status ? "Payé" : "En attente", 115, yPosition);
+      doc.text(formatTime(order.payment?.createdAt) || "N/A", 140, yPosition);
+
+      yPosition += 8;
+    });
+    doc.save("facture_soiree_blanche.pdf");
+  };
+
   return (
     <div className="w-full h-full flex flex-col mt-6">
       <Tabs defaultValue="participants">
@@ -48,7 +149,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                   <Download className="h-4 w-4" />
                   Excel
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={exportParticipantsToPDF}>
                   <File className="h-4 w-4" />
                   PDF
                 </Button>
@@ -77,10 +178,10 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                         <TableHead>Nom</TableHead>
                         <TableHead>Prénom</TableHead>
                         <TableHead>Email</TableHead>
+                        <TableHead className="text-left">Téléphone</TableHead>
                         <TableHead className="text-left">
-                          Ticket utiliser
+                          Status ticket
                         </TableHead>
-                        <TableHead className="text-left">Commande ID</TableHead>
                         <TableHead className="text-right">
                           Paiement ID
                         </TableHead>
@@ -106,14 +207,14 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                               <TableCell>{part.firstName}</TableCell>
                               <TableCell>{part.email}</TableCell>
                               <TableCell className="text-left">
+                                {formatPhone(order?.phone)}
+                              </TableCell>
+                              <TableCell className="text-left">
                                 {part.ticket?.used !== undefined
                                   ? part.ticket.used
                                     ? "Oui"
                                     : "Non"
                                   : "Non générer"}
-                              </TableCell>
-                              <TableCell className="text-left">
-                                {part.orderId}
                               </TableCell>
                               <TableCell className="text-right">
                                 {order.payment.providerId}
@@ -144,7 +245,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                   <Download className="h-4 w-4" />
                   Excel
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={exportFactureToPDF}>
                   <File className="h-4 w-4" />
                   PDF
                 </Button>

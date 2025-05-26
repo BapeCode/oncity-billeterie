@@ -236,6 +236,9 @@ export const GetAllParticipants = actionClient.action(async () => {
         },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   const participant_count = await prisma.participant.count();
   const payments = await prisma.payment.findMany({

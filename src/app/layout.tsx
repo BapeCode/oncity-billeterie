@@ -3,8 +3,8 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "OnCity Soirée Blanche Reservation",
-  description: "Soirée blanche - 17 Juin 2025",
+  title: "OnCity Soirée en blanc Reservation",
+  description: "Soirée en blanc - 17 Juin 2025",
   icons: {
     icon: [
       { url: "/favicon.ico", type: "image/x-icon" },

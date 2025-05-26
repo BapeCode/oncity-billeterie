@@ -68,7 +68,7 @@ export default function SuccessPage() {
       doc.setTextColor(217, 183, 90); // or
       doc.setFont("helvetica", "bold");
       doc.setFontSize(24);
-      doc.text("Soirée Blanche – OnCity x Lyon 6e", 105, 30, {
+      doc.text("Soirée en blanc – OnCity x Lyon 6e", 105, 30, {
         align: "center",
       });
 
@@ -83,7 +83,7 @@ export default function SuccessPage() {
       doc.text(`Participant : ${ticket.name}`, 20, 63);
       doc.text(`Montant : ${order.payment.amount / 100} €`, 20, 71);
       doc.text(
-        `Lieu : Café du pond, 11 Pl. Maréchal Lyautey, 69006 Lyon`,
+        `Lieu : Café du Pond, 11 Pl. Maréchal Lyautey, 69006 Lyon`,
         20,
         79
       );
