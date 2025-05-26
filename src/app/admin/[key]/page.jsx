@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import ListParticipants from "./ListsParticipants";
 import AdminTitle from "./AdminTitle";
 
-export default async function Page(props: { params: { key: string } }) {
+export default async function Page(props) {
   const key = await props.params.key;
 
   if (!key) return redirect("/");

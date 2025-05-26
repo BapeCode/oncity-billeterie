@@ -29,7 +29,8 @@
     ".next/types/**/*.ts",
     "src/app/my-tickets/[paymentNumber]/page.jsx",
     "src/app/tickets/[code]/buttonValidate.tsx",
-    "src/app/tickets/[code]/page.jsx"
+    "src/app/tickets/[code]/page.jsx",
+    "src/app/admin/[key]/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
