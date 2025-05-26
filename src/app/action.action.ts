@@ -209,11 +209,6 @@ export const GetTicketsByPaymentId = actionClient
 
 export const GetAllParticipants = actionClient.action(async () => {
   const res = await prisma.order.findMany({
-    where: {
-      payment: {
-        status: "paid",
-      },
-    },
     select: {
       firstName: true,
       lastName: true,
@@ -224,6 +219,7 @@ export const GetAllParticipants = actionClient.action(async () => {
           status: true,
           providerId: true,
           createdAt: true,
+          amount: true,
         },
       },
       participants: {
