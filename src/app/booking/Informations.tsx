@@ -32,7 +32,6 @@ export default function FormBooking({
   };
 
   const HandleRemoveQuantity = () => {
-    console.log({ attendees });
     setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);
   };
 

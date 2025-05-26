@@ -238,18 +238,22 @@ export const GetAllParticipants = actionClient.action(async () => {
     },
   });
   const participant_count = await prisma.participant.count();
-  const payment_count = await prisma.payment.count({
+  const payments = await prisma.payment.findMany({
     where: {
       status: "paid",
     },
   });
-  const total_amount = payment_count * 45; // 550€ par payement
+
+  let total_amount = 0;
+  for (const payment of payments) {
+    total_amount += payment.amount;
+  }
 
   return {
     success: true,
     data: res,
     partipantCount: participant_count,
-    paymentCount: payment_count,
+    paymentCount: payments.length,
     totalAmount: total_amount,
   };
 });
