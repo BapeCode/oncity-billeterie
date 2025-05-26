@@ -2,7 +2,7 @@ import { prisma } from "@/libs/prisma";
 import { NextResponse } from "next/server";
 import QRCode from "qrcode";
 
-const ticketId = () => {
+export const ticketId = () => {
   return `OCL6-${Date.now()}-${Math.random()
     .toString(36)
     .substring(2, 8)

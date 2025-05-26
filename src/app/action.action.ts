@@ -4,6 +4,7 @@ import { actionClient } from "@/lib/safe-action";
 import { prisma } from "@/libs/prisma";
 import QRCode from "qrcode";
 import z from "zod";
+import { ticketId } from "./api/generate-tickets/route";
 
 const QRCodeSchema = z.object({
   code: z.string(),
@@ -138,6 +139,7 @@ export const GetTicketsByPaymentId = actionClient
             accessToken: true,
             participants: {
               select: {
+                id: true,
                 firstName: true,
                 lastName: true,
                 ticket: {
@@ -156,14 +158,36 @@ export const GetTicketsByPaymentId = actionClient
     let qrcode: any[] = [];
 
     for (const item of res?.order?.participants ?? []) {
-      const qrURL = await QRCode.toDataURL(
-        `${process.env.URL_PUBLIC}tickets/${item.ticket?.code}`
-      );
-      qrcode.push({
-        name: `${item.firstName} ${item.lastName}`,
-        url: qrURL,
-        used: item.ticket?.used,
-      });
+      if (!item.ticket?.code) {
+        const ticket = await prisma.qRCodeTicket.create({
+          data: {
+            code: ticketId(),
+            participant: {
+              connect: {
+                id: item.id,
+              },
+            },
+          },
+        });
+        if (!ticket) continue;
+        const qrURL = await QRCode.toDataURL(
+          `${process.env.URL_PUBLIC}tickets/${item.ticket?.code}`
+        );
+        qrcode.push({
+          name: `${item.firstName} ${item.lastName}`,
+          url: qrURL,
+          used: item.ticket?.used,
+        });
+      } else {
+        const qrURL = await QRCode.toDataURL(
+          `${process.env.URL_PUBLIC}tickets/${item.ticket?.code}`
+        );
+        qrcode.push({
+          name: `${item.firstName} ${item.lastName}`,
+          url: qrURL,
+          used: item.ticket?.used,
+        });
+      }
     }
 
     if (!res)
@@ -177,3 +201,54 @@ export const GetTicketsByPaymentId = actionClient
       qrcode: qrcode,
     };
   });
+
+export const GetAllParticipants = actionClient.action(async () => {
+  const res = await prisma.order.findMany({
+    where: {
+      payment: {
+        status: "paid",
+      },
+    },
+    select: {
+      firstName: true,
+      lastName: true,
+      email: true,
+      phone: true,
+      payment: {
+        select: {
+          status: true,
+          providerId: true,
+          createdAt: true,
+        },
+      },
+      participants: {
+        select: {
+          firstName: true,
+          lastName: true,
+          email: true,
+          orderId: true,
+          ticket: {
+            select: {
+              used: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  const participant_count = await prisma.participant.count();
+  const payment_count = await prisma.payment.count({
+    where: {
+      status: "paid",
+    },
+  });
+  const total_amount = payment_count * 45; // 550€ par payement
+
+  return {
+    success: true,
+    data: res,
+    partipantCount: participant_count,
+    paymentCount: payment_count,
+    totalAmount: total_amount,
+  };
+});
