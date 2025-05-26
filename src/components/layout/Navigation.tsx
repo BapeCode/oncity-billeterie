@@ -30,16 +30,6 @@ export default function Navigation() {
           </Link>
 
           <ModalTickets />
-          {/* <Link href={"/my-tickets"}>
-          
-            <Button
-              variant={"outline"}
-              className="cursor-pointer text-lg"
-              size={"lg"}
-            >
-              Mes billets
-            </Button>
-          </Link> */}
         </div>
       </nav>
     </header>

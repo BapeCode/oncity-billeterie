@@ -8,7 +8,7 @@ export default function Informations() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto p-5 md:p-16">
         <div className="relative flex flex-col justify-start items-start gap-2 h-full">
           <span className="text-primary font-bold text-left text-2xl md:text-3xl">
-            Information sur la soirée
+            Informations sur la soirée
           </span>
           <p className="text-md md:text-xl text-white text-left">
             Lyon 6ème vous donne rendez-vous le 17 juin 2025 pour un événement
@@ -42,7 +42,7 @@ export default function Informations() {
                     }
                     className="underline cursor-pointer"
                   >
-                    Café du pond, 11 Pl. Maréchal Lyautey, 69006 Lyon
+                    Café du Pond, 11 Pl. Maréchal Lyautey, 69006 Lyon
                   </Link>
                 </strong>
               </span>
@@ -102,6 +102,10 @@ export default function Informations() {
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
                   <span>Animaux non admis</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
+                  <span>Mineur nom admins</span>
                 </li>
               </ul>
             </div>

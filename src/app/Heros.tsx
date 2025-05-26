@@ -1,3 +1,4 @@
+import ModalTickets from "@/components/layout/modal";
 import Section from "@/components/layout/Section";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -25,11 +26,9 @@ export default function Heros() {
               Réserver ma place
             </Button>
           </Link>
-          <Link href={"/my-tickets"} className="block md:hidden">
-            <Button size={"lg"} className="text-lg" variant={"link"}>
-              Mes places
-            </Button>
-          </Link>
+          <div className="block md:hidden">
+            <ModalTickets />
+          </div>
           <Button size={"lg"} className="text-lg" variant={"outline"}>
             En savoir plus
           </Button>
