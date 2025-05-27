@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default async function Page({ params }) {
-  const { paymentNumber } = params;
+  const { paymentNumber } = await params;
   if (!paymentNumber) {
     return null;
   }

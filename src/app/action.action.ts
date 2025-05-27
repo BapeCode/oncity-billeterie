@@ -160,6 +160,12 @@ export const GetTicketsByPaymentId = actionClient
       },
     });
 
+    if (res.status !== "paid") {
+      return {
+        error: "Le paiement n'est pas encore validé",
+      };
+    }
+
     let qrcode: any[] = [];
 
     for (const item of res?.order?.participants ?? []) {
@@ -174,15 +180,16 @@ export const GetTicketsByPaymentId = actionClient
             },
           },
         });
-        if (!ticket) continue;
-        const qrURL = await QRCode.toDataURL(
-          `${process.env.URL_PUBLIC}tickets/${item.ticket?.code}`
-        );
-        qrcode.push({
-          name: `${item.firstName} ${item.lastName}`,
-          url: qrURL,
-          used: item.ticket?.used,
-        });
+        if (!ticket) {
+          const qrURL = await QRCode.toDataURL(
+            `${process.env.URL_PUBLIC}tickets/${item.ticket?.code}`
+          );
+          qrcode.push({
+            name: `${item.firstName} ${item.lastName}`,
+            url: qrURL,
+            used: item.ticket?.used,
+          });
+        }
       } else {
         const qrURL = await QRCode.toDataURL(
           `${process.env.URL_PUBLIC}tickets/${item.ticket?.code}`

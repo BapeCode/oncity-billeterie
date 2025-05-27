@@ -5,7 +5,7 @@ import ListParticipants from "./ListsParticipants";
 import AdminTitle from "./AdminTitle";
 
 export default async function Page(props) {
-  const key = await props.params.key;
+  const { key } = await props.params;
 
   if (!key) return redirect("/");
   if (key !== process.env.ADMIN_KEY) return redirect("/");
