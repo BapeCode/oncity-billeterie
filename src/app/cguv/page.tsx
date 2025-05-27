@@ -135,7 +135,7 @@ export default function Page() {
 
           <span className="text-left text-md wrap-break-word">
             L&#39;Organisateur ne saurait être tenu responsable en
-            <strong>cas de perte, vol ou dégradation</strong> d&#39;effets
+            <strong> cas de perte, vol ou dégradation</strong> d&#39;effets
             personnels. En <strong>cas de non-respect des règles</strong> par un
             participant. Pour tout incident survenant en dehors du périmètre de
             l&#39;événement.
