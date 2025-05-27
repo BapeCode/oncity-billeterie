@@ -47,6 +47,23 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
     }
   };
 
+  const handleFilterBill = (e) => {
+    const value = e.target.value;
+
+    if (value === "") {
+      setFilterOrders(orders);
+    } else {
+      const filteredOrders = orders.filter((order) => {
+        return (
+          order.payment?.providerId.toLowerCase().includes(value.toLowerCase()),
+          order.firstName.toLowerCase().includes(value.toLowerCase()),
+          order.lastName.toLowerCase().includes(value.toLowerCase())
+        );
+      });
+      setFilterOrders(filteredOrders);
+    }
+  };
+
   const exportParticipantsToPDF = () => {
     const doc = new jsPDF();
 
@@ -306,12 +323,13 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                     id="search"
                     className="w-full bg-transparent outline-none text-sm"
                     placeholder="Rechercher un participant"
+                    onChange={handleFilterBill}
                   />
                 </div>
 
                 <div className="rounded-md border w-full p-2">
                   <Table>
-                    <TableCaption>Liste des participants</TableCaption>
+                    <TableCaption>Liste des factures et paiement</TableCaption>
                     <TableHeader>
                       <TableRow>
                         <TableHead>ID de commande</TableHead>
@@ -326,7 +344,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {orders.length === 0 && (
+                      {filterOrders.length === 0 && (
                         <TableRow>
                           <TableCell colSpan={6} className="text-center">
                             Aucun facturation trouvé
@@ -334,7 +352,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                         </TableRow>
                       )}
 
-                      {orders.map((order, orderIndex) => {
+                      {filterOrders.map((order, orderIndex) => {
                         return (
                           <TableRow key={orderIndex + orderIndex}>
                             <TableCell>{orderIndex + 1}</TableCell>
