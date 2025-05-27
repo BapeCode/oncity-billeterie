@@ -224,6 +224,7 @@ export const GetAllParticipants = actionClient.action(async () => {
       },
       participants: {
         select: {
+          id: true,
           firstName: true,
           lastName: true,
           email: true,
@@ -233,6 +234,9 @@ export const GetAllParticipants = actionClient.action(async () => {
               used: true,
             },
           },
+        },
+        orderBy: {
+          id: "desc",
         },
       },
     },

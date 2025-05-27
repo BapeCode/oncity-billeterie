@@ -24,8 +24,28 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatPhone, formatTime } from "@/lib/format";
 import jsPDF from "jspdf";
 import { Download, File, Search } from "lucide-react";
+import { useState } from "react";
 
 export default function ListParticipants({ orders }: { orders: any[] }) {
+  const [filterOrders, setFilterOrders] = useState(orders);
+  const handleFilter = (e) => {
+    const value = e.target.value;
+
+    if (value === "") {
+      setFilterOrders(orders);
+    } else {
+      const filteredOrders = orders.filter((order) => {
+        return (
+          order.lastName.toLowerCase().includes(value.toLowerCase()) ||
+          order.firstName.toLowerCase().includes(value.toLowerCase()) ||
+          order.email.toLowerCase().includes(value.toLowerCase()) ||
+          order.phone.toLowerCase().includes(value.toLowerCase())
+        );
+      });
+      setFilterOrders(filteredOrders);
+    }
+  };
+
   const exportParticipantsToPDF = () => {
     const doc = new jsPDF();
 
@@ -153,10 +173,6 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                 </CardDescription>
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="default">
-                  <Download className="h-4 w-4" />
-                  Excel
-                </Button>
                 <Button variant="outline" onClick={exportParticipantsToPDF}>
                   <File className="h-4 w-4" />
                   PDF
@@ -174,6 +190,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                     id="search"
                     className="w-full bg-transparent outline-none text-sm"
                     placeholder="Rechercher un participant"
+                    onChange={handleFilter}
                   />
                 </div>
 
@@ -196,21 +213,20 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {orders.length === 0 && (
-                        <TableRow>
-                          <TableCell colSpan={6} className="text-center">
-                            Aucun participant trouvé
-                          </TableCell>
-                        </TableRow>
-                      )}
+                      {orders.length === 0 ||
+                        (filterOrders.length === 0 && (
+                          <TableRow>
+                            <TableCell colSpan={7} className="text-center">
+                              Aucun participant trouvé
+                            </TableCell>
+                          </TableRow>
+                        ))}
 
-                      {orders.map((order, orderIndex) => {
+                      {filterOrders.map((order, orderIndex) => {
                         return order.participants.map((part, partIndex) => {
                           return (
                             <TableRow key={orderIndex + partIndex}>
-                              <TableCell>
-                                {orderIndex + partIndex + 1}
-                              </TableCell>
+                              <TableCell>{part.id}</TableCell>
                               <TableCell>{part.lastName}</TableCell>
                               <TableCell>{part.firstName}</TableCell>
                               <TableCell>{part.email}</TableCell>
@@ -249,10 +265,6 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                 </CardDescription>
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="default">
-                  <Download className="h-4 w-4" />
-                  Excel
-                </Button>
                 <Button variant="outline" onClick={exportFactureToPDF}>
                   <File className="h-4 w-4" />
                   PDF
