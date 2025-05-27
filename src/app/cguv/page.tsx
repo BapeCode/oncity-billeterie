@@ -30,15 +30,15 @@ export default function Page() {
           </h1>
 
           <span className="text-left text-md wrap-break-word">
-            L'événement est{" "}
+            L&#39;événement est{" "}
             <strong>strictement interdit aux mineurs (moins de 18 ans)</strong>.
-            Une pièces d'identité valide pourra être exigée à l'entrée. L'accès
-            à l'événement est soumis à la présentation d'un billet nominatif et
-            d'un <strong>QR code valide</strong>. Ce billet est personnel, non
-            échangable et non remboursable. Une{" "}
-            <strong>tenue blanche est exigée</strong>. L'accès pourra être
-            refusé à toute personne ne respectant pas le dress code ou une
-            majoration de <strong>60,00€</strong> pourra être demander.
+            Une pièce d&#39;identité valide pourra être exigée à l&#39;entrée.
+            L&#39;accès à l&#39;événement est soumis à la présentation d&#39;un
+            billet nominatif et d&#39;un <strong>QR code valide</strong>. Ce
+            billet est personnel, non échangeable et non remboursable. Une{" "}
+            <strong>tenue blanche est exigée</strong>. L&#39;accès pourra
+            être refusé à toute personne ne respectant pas le dress code, ou une
+            majoration de <strong>60,00€</strong> pourra être demandée.
           </span>
         </div>
 
@@ -49,10 +49,10 @@ export default function Page() {
 
           <span className="text-left text-md wrap-break-word">
             <strong>
-              Toute personne en état d'ébriété manifeste pourra se voir refuser
-              l'accès ou être expulsée
+              Toute personne en état d&#39;ébriété manifeste pourra se voir
+              refuser l&#39;accès ou être expulsée
             </strong>{" "}
-            de l'événement sans possibilité de remboursement.{" "}
+            de l&#39;événement sans possibilité de remboursement.
             <strong>
               L'introduction de substances illicites, d'armes, ou d'objects
               dangereux est formellement interdite
@@ -75,7 +75,11 @@ export default function Page() {
             que <strong>l'abus d'alcool est dangereux pour la santé</strong> et
             encourage une consommation responsable. Des mesures de prévention
             pourront être mises en place (distribution d'eau gratuite, personnel
-            sensibilisé, affichage informatif...)
+            sensibilisé, affichage informatif...). L&#39;introduction de
+            substances illicites, d&#39;armes ou d&#39;objets dangereux est
+            formellement interdite. L&#39;Organisateur se réserve le droit de
+            refuser l&#39;entrée ou d&#39;expulser toute personne ayant un
+            comportement jugé inapproprié, agressif ou dangereux.
           </span>
         </div>
 
@@ -85,17 +89,16 @@ export default function Page() {
           </h1>
 
           <span className="text-left text-md wrap-break-word">
-            L'Organisateur{" "}
+            L&#39;Organisateur{" "}
             <strong>
-              encourage fortement l'usage des transports en commun
+              encourage fortement l&#39;usage des transports en commun
             </strong>
             , des VTC, ou du covoiturage afin de garantir la sécurité de tous
-            les participants. Il est{" "}
+            les participants.{" "}
             <strong>
-              formellement déconseillé de reprendre le volant après avoir
-              consommé de l'alcool
+              Il est formellement déconseillé de reprendre le volant après avoir
+              consommé de l&#39;alcool.{" "}
             </strong>
-            .
           </span>
         </div>
 
@@ -105,9 +108,9 @@ export default function Page() {
           </h1>
 
           <span className="text-left text-md wrap-break-word">
-            En accédant à l'événement, vous acceptez que votre iamge puisse être
-            captée à des fins de communication (photo/vidéo), sauf opposition
-            explicite.
+            En accédant à l&#39;événement, vous acceptez que votre image puisse
+            être captée à des fins de communication (photo/vidéo), sauf
+            opposition explicite.
           </span>
         </div>
 
@@ -131,11 +134,11 @@ export default function Page() {
           </h1>
 
           <span className="text-left text-md wrap-break-word">
-            L'Organisateur ne saurait être tenu responsable, en{" "}
-            <strong>cas de perte, vol, ou dégradation</strong> d'effets
+            L&#39;Organisateur ne saurait être tenu responsable en
+            <strong>cas de perte, vol ou dégradation</strong> d&#39;effets
             personnels. En <strong>cas de non-respect des règles</strong> par un
             participant. Pour tout incident survenant en dehors du périmètre de
-            l'événement.
+            l&#39;événement.
           </span>
         </div>
 
@@ -145,10 +148,10 @@ export default function Page() {
           </h1>
 
           <span className="text-left text-md wrap-break-word">
-            En cas de modification majeure ou d'annulation indépendante de la
-            volonté de l'Organisateur (force majeure, mesure sanitaires...), les
-            billets ne pourront être remoubrsées que selon les conditions
-            définies.
+            En cas de modification majeure ou d&#39;annulation indépendante de
+            la volonté de l&#39;Organisateur (force majeure, mesure
+            sanitaire...), les billets ne pourront être remboursés que selon les
+            conditions définies.
           </span>
         </div>
       </div>
