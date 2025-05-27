@@ -28,6 +28,7 @@ import { useState } from "react";
 
 export default function ListParticipants({ orders }: { orders: any[] }) {
   const [filterOrders, setFilterOrders] = useState(orders);
+
   const handleFilter = (e) => {
     const value = e.target.value;
 
@@ -74,29 +75,52 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
     doc.setFontSize(10);
     yPosition += 10;
 
-    orders.forEach((part, index) => {
-      if (yPosition > 270) {
-        doc.addPage();
-        yPosition = 20;
-      }
-      const partIndex = index + 1;
+    orders.map((order, index) => {
+      order.participants.map((part, index) => {
+        if (yPosition > 270) {
+          doc.addPage();
+          yPosition = 20;
+        }
 
-      doc.text(partIndex.toString(), 20, yPosition);
-      doc.text(part.lastName, 40, yPosition);
-      doc.text(part.firstName, 70, yPosition);
-      doc.text(
-        part.email.length > 20
-          ? part.email.substring(0, 20) + "..."
-          : part.email,
-        100,
-        yPosition
-      );
-      doc.text(formatPhone(part.phone), 150, yPosition);
-
-      yPosition += 8;
+        doc.text(part.id.toString(), 20, yPosition);
+        doc.text(part.lastName, 40, yPosition);
+        doc.text(part.firstName, 70, yPosition);
+        doc.text(
+          part.email.length > 20
+            ? part.email.substring(0, 20) + "..."
+            : part.email,
+          100,
+          yPosition
+        );
+        doc.text(formatPhone(order.phone) ?? "NA", 150, yPosition);
+        yPosition += 8;
+      });
     });
-
     doc.save("liste_participants_soiree_blanche.pdf");
+
+    //   if (yPosition > 270) {
+    //     doc.addPage();
+    //     yPosition = 20;
+    //   }
+    //   console.log(part);
+    //   console.log(index);
+
+    //   doc.text(part.id, 20, yPosition);
+    //   doc.text(part.lastName, 40, yPosition);
+    //   doc.text(part.firstName, 70, yPosition);
+    //   doc.text(
+    //     part.email.length > 20
+    //       ? part.email.substring(0, 20) + "..."
+    //       : part.email,
+    //     100,
+    //     yPosition
+    //   );
+    //   doc.text(formatPhone(part.phone), 150, yPosition);
+
+    //   yPosition += 8;
+    // });
+
+    // doc.save("liste_participants_soiree_blanche.pdf");
   };
 
   const exportFactureToPDF = () => {
