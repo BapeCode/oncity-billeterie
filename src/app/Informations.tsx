@@ -80,7 +80,7 @@ export default function Informations() {
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                  <span>Participation au concours de pétanque & élégance</span>
+                  <span>Participation aux concours de pétanque et élégance.</span>
                 </li>
               </ul>
             </div>
