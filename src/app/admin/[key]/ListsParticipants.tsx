@@ -55,7 +55,9 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
     } else {
       const filteredOrders = orders.filter((order) => {
         return (
-          order.payment?.providerId.toLowerCase().includes(value.toLowerCase()),
+          order.payment?.providerId
+            ?.toLowerCase()
+            .includes(value.toLowerCase()),
           order.firstName.toLowerCase().includes(value.toLowerCase()),
           order.lastName.toLowerCase().includes(value.toLowerCase())
         );
@@ -282,7 +284,9 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                                   : "Non générer"}
                               </TableCell>
                               <TableCell className="text-right">
-                                {order.payment.providerId}
+                                {order.payment?.providerId !== null
+                                  ? order.payment?.providerId
+                                  : "ERROR !"}
                               </TableCell>
                             </TableRow>
                           );
