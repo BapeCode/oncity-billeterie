@@ -1,7 +1,7 @@
 "use server";
 
 import { actionClient } from "@/lib/safe-action";
-import { prisma } from "@/libs/prisma";
+import { prisma } from "@/lib/prisma";
 import QRCode from "qrcode";
 import z from "zod";
 
@@ -160,7 +160,7 @@ export const GetTicketsByPaymentId = actionClient
       },
     });
 
-    if (res.status !== "paid") {
+    if (res?.status !== "paid") {
       return {
         error: "Le paiement n'est pas encore validé",
       };

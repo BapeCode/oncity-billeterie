@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
-import ModalTickets from "./modal";
+import ModalTickets from "./Modal";
 
 export default function Navigation() {
   return (
@@ -29,7 +29,7 @@ export default function Navigation() {
             </Button>
           </Link>
 
-          <ModalTickets />
+          <ModalTickets/>
         </div>
       </nav>
     </header>

@@ -5,30 +5,43 @@ import Link from "next/link";
 export default function Informations() {
   return (
     <Section className="bg-secondary w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto p-5 md:p-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start max-w-7xl mx-auto p-5 md:p-16">
         <div className="relative flex flex-col justify-start items-start gap-2 h-full">
           <span className="text-primary font-bold text-left text-2xl md:text-3xl">
             Informations sur la soirée
           </span>
           <p className="text-md md:text-xl text-white text-left">
-            Lyon 6ème vous donne rendez-vous le 17 juin 2025 pour un événement
-            hors du temps : la Soirée en blanc au Café du Pond. Une nuit pensée
-            comme un écrin, où chaque détail compte, et où le raffinement
-            devient la seule règle. Un concours de pétanque et un concours
-            d'élégance seront organisés, avec de très beaux lots à la clé !
+            Plongez dans l&apos;atmosphère envoûtante des années folles lors
+            d’une soirée exceptionnelle où élégance, mystère et fête se mêlent
+            jusqu&apos;au bout de la nuit. Dès votre arrivée, vous serez
+            transporté dans un décor inspiré des bars clandestins de la
+            Prohibition américaine : lumières tamisées, ambiance feutrée et
+            esprit speakeasy garanti.
+            <br /> La soirée débutera au son du jazz, dans une atmosphère
+            immersive rappelant les clubs mythiques des années 1920. Puis,
+            progressivement, le rythme s’accélère : le DJ prendra le relais pour
+            faire vibrer la piste et transformer le bal en véritable nuit
+            festive jusqu’à 2h du matin. Pour rester dans l’esprit, chacun est
+            invité à adopter une tenue inspirée des Années folles : robes à
+            franges, plumes, perles, gants, bretelles, nœuds papillon et allure
+            Gatsby. <br />
+            Et, comme dans tout rendez-vous clandestin, le masque sera
+            obligatoire, ajoutant une touche de mystère à cette soirée hors du
+            temps. Une expérience immersive qui se ponctuera d&apos;un concours
+            d&apos;élégance, avec de très beaux lots à gagner.
           </p>
 
           <ul className="text-white flex flex-col items-start gap-2 w-full text-md md:text-lg md:mt-5">
             <li className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
               <span>
-                Date : <strong>17 juin 2025</strong>
+                Date : <strong>Mercredi 17 décembre 2025</strong>
               </span>
             </li>
             <li className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
               <span>
-                Horaire : <strong>de 19:30 à 01:00</strong>
+                Horaire : <strong>De 21h00 à 02h00 du matin</strong>
               </span>
             </li>
             <li className="flex items-center gap-2">
@@ -38,18 +51,19 @@ export default function Informations() {
                 <strong>
                   <Link
                     href={
-                      "https://www.google.com/maps/place/Caf%C3%A9+Du+Pond/@45.7682479,4.8427085,17z/data=!3m1!4b1!4m6!3m5!1s0x47f4eaf0d2b69f33:0x9497e733dc6e3076!8m2!3d45.7682479!4d4.8427085!16s%2Fg%2F1tfj2j17?entry=ttu&g_ep=EgoyMDI1MDUxNS4wIKXMDSoASAFQAw%3D%3D"
+                      "https://www.google.com/maps/search/Gare+des+Brotteaux,+Members,+13+ter+Place+Jules+Ferry,+69006+Lyon+/@45.7675585,4.8569196,18z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MTExNi4wIKXMDSoASAFQAw%3D%3D"
                     }
                     className="underline cursor-pointer"
                   >
-                    Café du Pond, 11 Pl. Maréchal Lyautey, 69006 Lyon
+                    Gare des Brotteaux, Members, 13 ter Place Jules Ferry, 69006
+                    Lyon
                   </Link>
                 </strong>
               </span>
             </li>
           </ul>
 
-          <Link href={"/booking"} className="md:absolute md:bottom-0 w-full">
+          <Link href={"/booking"} className=" w-full">
             <Button
               size={"lg"}
               className="text-lg w-full md:w-auto mt-5"
@@ -76,11 +90,7 @@ export default function Informations() {
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                  <span>Buffet dinatoire</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                  <span>Participation aux concours de pétanque et élégance.</span>
+                  <span>Participation aux concours d&apos;élégance.</span>
                 </li>
               </ul>
             </div>
@@ -93,11 +103,13 @@ export default function Informations() {
               <ul className="text-white flex flex-col items-start gap-2 w-full text-lg">
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                  <span>Tenue blanche exigée</span>
+                  <span>
+                    Tenue dans le thème 1925 (Années folles) obligatoire
+                  </span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                  <span>Chaussures colorées acceptées</span>
+                  <span>Accès uniquement sur réservation</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
@@ -115,7 +127,7 @@ export default function Informations() {
                 Prix par personne
               </span>
               <span className="text-primary font-bold text-xl md:text-2xl">
-                45€ TTC
+                29€ TTC
               </span>
             </div>
           </div>

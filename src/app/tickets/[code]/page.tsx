@@ -2,9 +2,9 @@ import Section from "@/components/layout/Section";
 import Navigation from "@/components/layout/Navigation";
 import { CheckCircle, X } from "lucide-react";
 import { GetCodeQR } from "@/app/action.action";
-import ButtonValidate from "./buttonValidate";
+import ButtonValidate from "./components/Validate";
 
-export default async function Page({ params }) {
+export default async function Page({ params }: { params: { code: string } }) {
   const { code } = await params;
   const codeQR = await GetCodeQR({ code });
 

@@ -1,20 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
-
+import { Toaster } from "sonner";
 export const metadata: Metadata = {
-  title: "OnCity Soirée en blanc Reservation",
-  description: "Soirée en blanc - 17 Juin 2025",
-  icons: {
-    icon: [
-      { url: "/favicon.ico", type: "image/x-icon" },
-      { url: "/favicon.png", type: "image/png" },
-    ],
-  },
-  robots: {
-    index: false,
-    follow: false,
-  },
+  title: "Lyon6ème & OnCity - Billeterie Officielle",
+  description:
+    "Billeterie officielle de Lyon6ème & OnCity, pour des événements organisé sur Lyon et sa périphérie.",
 };
 
 export default function RootLayout({

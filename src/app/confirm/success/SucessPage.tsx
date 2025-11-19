@@ -68,12 +68,12 @@ export default function SuccessPage() {
       doc.setTextColor(217, 183, 90); // or
       doc.setFont("helvetica", "bold");
       doc.setFontSize(24);
-      doc.text("Soirée en blanc – OnCity x Lyon 6e", 105, 30, {
+      doc.text("Soirée 1925 - OnCity x Lyon 6e", 105, 30, {
         align: "center",
       });
 
       doc.setFontSize(14);
-      doc.text("Mardi 17 Juin 2025 – 19h30", 105, 40, { align: "center" });
+      doc.text("Mercredi 17 Décembre 2025 – 21:00 à 2:00", 105, 40, { align: "center" });
 
       // Infos participant
       doc.setTextColor(0, 0, 0);
@@ -83,7 +83,7 @@ export default function SuccessPage() {
       doc.text(`Participant : ${ticket.name}`, 20, 63);
       doc.text(`Montant : ${order.payment.amount / 100} €`, 20, 71);
       doc.text(
-        `Lieu : Café du Pond, 11 Pl. Maréchal Lyautey, 69006 Lyon`,
+        `Lieu : Gare des Brotteaux, Members, 13 ter Place Jules Ferry, 69006 Lyon `,
         20,
         79
       );
@@ -91,7 +91,7 @@ export default function SuccessPage() {
       // QR Code
       doc.addImage(ticket.qr, "PNG", 150, 55, 40, 40);
       doc.setFontSize(10);
-      doc.text("Présentez ce QR Code à l’entrée", 170, 97, { align: "center" });
+      doc.text("Présentez ce QR Code à l'entrée", 170, 97, { align: "center" });
 
       // Détails de l’événement
       doc.setFont("helvetica", "bold");
@@ -103,8 +103,7 @@ export default function SuccessPage() {
       const inclus = [
         "Accès à la soirée privée",
         "Une boisson offerte",
-        "Accès au buffet dinatoire",
-        "Participation aux concours de pétanque & élégance",
+        "Participation aux concours d'élégance",
       ];
       inclus.forEach((line, idx) => {
         doc.text(line, 25, 115 + idx * 8);
@@ -114,7 +113,7 @@ export default function SuccessPage() {
       doc.setFont("helvetica", "bold");
       doc.setFontSize(13);
       doc.setTextColor(0, 0, 0);
-      doc.text("Conditions d’utilisation :", 20, 155);
+      doc.text("Conditions d'utilisation :", 20, 155);
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
@@ -130,7 +129,7 @@ export default function SuccessPage() {
       doc.rect(0, 285, 210, 12, "F");
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(10);
-      doc.text("www.soireeblanche.com – Powered by OnCity", 105, 292, {
+      doc.text("www.lyon6emesoiree.oncity.fr – Powered by Lyon6ème & OnCity", 105, 292, {
         align: "center",
       });
     }

@@ -8,14 +8,12 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -23,13 +21,13 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatPhone, formatTime } from "@/lib/format";
 import jsPDF from "jspdf";
-import { Download, File, Search } from "lucide-react";
+import { File, Search } from "lucide-react";
 import { useState } from "react";
 
 export default function ListParticipants({ orders }: { orders: any[] }) {
   const [filterOrders, setFilterOrders] = useState(orders);
 
-  const handleFilter = (e) => {
+  const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (value === "") {
@@ -47,7 +45,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
     }
   };
 
-  const handleFilterBill = (e) => {
+  const handleFilterBill = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (value === "") {
@@ -71,7 +69,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
 
     doc.setFontSize(20);
     doc.text(
-      "Liste des Participants - Soirée en blanc Lyon 6ème OnCity",
+      "Liste des Participants - Soirée 1925 Lyon 6ème OnCity",
       20,
       20
     );
@@ -80,7 +78,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
     doc.text(`Exporté le: ${new Date().toLocaleDateString("fr-FR")}`, 20, 30);
 
     doc.setFontSize(12);
-    doc.setFont(undefined, "bold");
+    doc.setFont("Arial", "bold");
     let yPosition = 50;
     doc.text("ID", 20, yPosition);
     doc.text("Nom", 40, yPosition);
@@ -90,12 +88,12 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
 
     doc.line(20, yPosition + 2, 190, yPosition + 2);
 
-    doc.setFont(undefined, "normal");
+    doc.setFont("Arial", "normal");
     doc.setFontSize(10);
     yPosition += 10;
 
-    orders.map((order, index) => {
-      order.participants.map((part, index) => {
+    orders.map((order: any, index: number) => {
+      order.participants.map((part: any, index: number) => {
         if (yPosition > 270) {
           doc.addPage();
           yPosition = 20;
@@ -115,44 +113,20 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
         yPosition += 8;
       });
     });
-    doc.save("liste_participants_soiree_blanche.pdf");
-
-    //   if (yPosition > 270) {
-    //     doc.addPage();
-    //     yPosition = 20;
-    //   }
-    //   console.log(part);
-    //   console.log(index);
-
-    //   doc.text(part.id, 20, yPosition);
-    //   doc.text(part.lastName, 40, yPosition);
-    //   doc.text(part.firstName, 70, yPosition);
-    //   doc.text(
-    //     part.email.length > 20
-    //       ? part.email.substring(0, 20) + "..."
-    //       : part.email,
-    //     100,
-    //     yPosition
-    //   );
-    //   doc.text(formatPhone(part.phone), 150, yPosition);
-
-    //   yPosition += 8;
-    // });
-
-    // doc.save("liste_participants_soiree_blanche.pdf");
+    doc.save("liste_participants_soiree_1925.pdf");
   };
 
   const exportFactureToPDF = () => {
     const doc = new jsPDF();
 
     doc.setFontSize(20);
-    doc.text("Facture - Soirée en blanc Lyon 6ème OnCity", 20, 20);
+    doc.text("Facture - Soirée 1925 Lyon 6ème OnCity", 20, 20);
 
     doc.setFontSize(10);
     doc.text(`Exporté le: ${new Date().toLocaleDateString("fr-FR")}`, 20, 30);
 
     doc.setFontSize(12);
-    doc.setFont(undefined, "bold");
+    doc.setFont("Arial", "bold");
     let yPosition = 80;
     doc.text("ID", 20, yPosition);
     doc.text("Nom", 40, yPosition);
@@ -162,11 +136,11 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
     doc.text("Date", 140, yPosition);
 
     doc.line(20, yPosition + 2, 190, yPosition + 2);
-    doc.setFont(undefined, "normal");
+    doc.setFont("Arial", "normal");
     doc.setFontSize(10);
     yPosition += 10;
 
-    orders.forEach((order, index) => {
+    orders.forEach((order: any, index: number) => {
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
@@ -192,7 +166,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
 
       yPosition += 8;
     });
-    doc.save("facture_soiree_blanche.pdf");
+    doc.save("facture_soiree_1925.pdf");
   };
 
   return (
@@ -218,7 +192,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
               <div className="flex items-center gap-2">
                 <Button variant="outline" onClick={exportParticipantsToPDF}>
                   <File className="h-4 w-4" />
-                  PDF
+                  PDF Participants
                 </Button>
               </div>
             </div>
@@ -266,7 +240,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
                         ))}
 
                       {filterOrders.map((order, orderIndex) => {
-                        return order.participants.map((part, partIndex) => {
+                        return order.participants.map((part: any, partIndex: number) => {
                           return (
                             <TableRow key={orderIndex + partIndex}>
                               <TableCell>{part.id}</TableCell>
@@ -312,7 +286,7 @@ export default function ListParticipants({ orders }: { orders: any[] }) {
               <div className="flex items-center gap-2">
                 <Button variant="outline" onClick={exportFactureToPDF}>
                   <File className="h-4 w-4" />
-                  PDF
+                  PDF Facture
                 </Button>
               </div>
             </div>

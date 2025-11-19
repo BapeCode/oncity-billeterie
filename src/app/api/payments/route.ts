@@ -1,10 +1,10 @@
-import { prisma } from "@/libs/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { customAlphabet } from "nanoid";
+import { access } from "fs";
 
 export async function POST(req: Request) {
-  const { firstName, lastName, email, phone, quantity, attendees } =
-    await req.json();
+  const { firstName, lastName, email, phone, quantity, attendees } = await req.json();
 
   const allParticipants = [
     {
@@ -16,17 +16,17 @@ export async function POST(req: Request) {
     ...attendees.map((p: any) => ({
       firstName: p.firstName,
       lastName: p.lastName,
-      email: p.email,
-      phone: p.phone,
+      email: email,
+      phone: phone,
     })),
   ];
 
   const participantToAddCount = allParticipants.length;
 
   const result = await prisma.$transaction(async (tx: any) => {
-    const totalParticipants = await tx.participant.count();
+    const totalUsers = await tx.participant.count();
 
-    if (totalParticipants + participantToAddCount > 200) {
+    if (totalUsers + participantToAddCount > 100) {
       throw new Error("PLACES_LIMIT_REACHED");
     }
 
@@ -34,6 +34,9 @@ export async function POST(req: Request) {
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
       32
     );
+
+    console.log(JSON.stringify(allParticipants));
+    console.log(generateAccessToken());
 
     const order = await tx.order.create({
       data: {
@@ -43,8 +46,8 @@ export async function POST(req: Request) {
         phone,
         attendees: JSON.stringify(allParticipants),
         accessToken: generateAccessToken(),
-      },
-    });
+      }
+    })
 
     return { order };
   });
@@ -58,7 +61,7 @@ export async function POST(req: Request) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      amount: quantity * 4500,
+      amount: quantity * 2900,
       currency: "EUR",
       customer: {
         first_name: firstName,
@@ -71,7 +74,7 @@ export async function POST(req: Request) {
           process.env.URL_PUBLIC + `confirm/success?token=${order.accessToken}`,
       },
     }),
-  });
+  })
 
   const payment = await res.json();
 
@@ -79,14 +82,14 @@ export async function POST(req: Request) {
     data: {
       providerId: payment.id,
       status: payment.is_paid ? "paid" : "pending",
-      amount: payment.amount,
+      amount: payment.amount || 29,
       order: {
         connect: {
           id: order.id,
         },
       },
     },
-  });
-
+  })
+  
   return NextResponse.json({ url: payment.hosted_payment.payment_url });
 }

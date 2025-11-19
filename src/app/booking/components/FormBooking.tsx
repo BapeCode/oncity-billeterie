@@ -3,38 +3,38 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
-export default function InformationsForm({
+export default function FormBooking({
   attendees,
   quantity,
 }: {
-  attendees: { firstName: string; lastName: string; email: string }[];
+  attendees: { firstName: string; lastName: string; }[];
   quantity: number;
 }) {
   const validateAttendees = () => {
     return attendees.every(
       (attendee) =>
         attendee.firstName.trim() !== "" &&
-        attendee.lastName.trim() !== "" &&
-        attendee.email.trim() !== ""
+        attendee.lastName.trim() !== ""
     );
   };
 
-  const HandleSubmit = async (formData: FormData) => {
+  const HandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const firstName = formData.get("firstname");
     const lastName = formData.get("lastname");
     const email = formData.get("email");
     const phone = formData.get("phone");
 
     if (!firstName || !lastName || !email || !phone) {
-      toast.error("Veuillez remplir tous les champs dans les informations");
+      toast.error("Veuillez remplir tous les champs");
       return;
     }
 
     if (quantity > 1 && !validateAttendees()) {
-      toast.error("Veuillez remplir tous les champs pour chaque participant");
+      toast.error("Veuillez remplir tous les champs");
       return;
     }
 
@@ -63,7 +63,7 @@ export default function InformationsForm({
   };
 
   return (
-    <form action={HandleSubmit} className="flex flex-col w-full gap-4">
+    <form onSubmit={HandleSubmit} className="flex flex-col w-full gap-4" suppressHydrationWarning>
       <div className="flex flex-row items-center gap-4 w-full">
         <div className="flex flex-col items-start flex-1 gap-2">
           <Label htmlFor="lastname" className="text-lg">

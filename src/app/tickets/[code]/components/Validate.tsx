@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { ValidateTicket } from "@/app/action.action"; // ← server action côté backend
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function ButtonValidate({ ticketCode }: { ticketCode: string }) {
   const router = useRouter();
@@ -13,7 +13,7 @@ export default function ButtonValidate({ ticketCode }: { ticketCode: string }) {
       const res = await ValidateTicket({ code: ticketCode });
 
       if (res?.data?.success) {
-        toast.success("✅ Le ticket a été validé !");
+        toast.success("✅ Le ticket a été validé !")
         setTimeout(() => {
           router.refresh();
         }, 1500);

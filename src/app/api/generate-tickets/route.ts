@@ -1,4 +1,4 @@
-import { prisma } from "@/libs/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import QRCode from "qrcode";
 
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
         },
       },
     },
-  });
+  })
 
   if (!order)
     return NextResponse.json({ error: "Order not found" }, { status: 404 });

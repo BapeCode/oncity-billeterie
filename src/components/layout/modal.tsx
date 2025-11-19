@@ -12,9 +12,9 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { Input } from "../ui/input";
+import { redirect } from "next/navigation";
 import { GetTicketsByPaymentId } from "@/app/action.action";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
 
 export default function ModalTickets() {
   const handleSearch = async () => {
@@ -24,10 +24,10 @@ export default function ModalTickets() {
     const resp = await GetTicketsByPaymentId({ paymentNumber });
 
     if (resp?.data?.error) {
-      toast.error(resp?.data?.error);
+        toast.error(resp?.data?.error)
     } else {
-      toast.success("Billets trouvés");
-      redirect(`/my-tickets/${paymentNumber}`);
+        toast.success("Billets trouvés")
+        redirect(`/my-tickets/${paymentNumber}`);
     }
   };
 

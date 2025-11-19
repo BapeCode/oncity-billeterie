@@ -1,16 +1,16 @@
 import { GetAllParticipants } from "@/app/action.action";
 import Navigation from "@/components/layout/Navigation";
 import { redirect } from "next/navigation";
-import ListParticipants from "./ListsParticipants";
-import AdminTitle from "./AdminTitle";
+import ListParticipants from "./components/Lists";
+import AdminTitle from "./components/AdminTitle";
 
-export default async function Page(props) {
-  const { key } = await props.params;
+export default async function Page({ params }: { params: { key: string } }) {
+  const { key } = await params;
 
   if (!key) return redirect("/");
   if (key !== process.env.ADMIN_KEY) return redirect("/");
 
-  const query = await GetAllParticipants({});
+  const query = await GetAllParticipants();
 
   return (
     <main className="flex flex-col items-center justify-start h-screen w-full">

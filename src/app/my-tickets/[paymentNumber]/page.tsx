@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-export default async function Page({ params }) {
+export default async function Page({ params }: { params: { paymentNumber: string } }) {
   const { paymentNumber } = await params;
   if (!paymentNumber) {
     return null;

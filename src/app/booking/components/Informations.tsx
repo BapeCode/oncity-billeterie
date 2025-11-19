@@ -6,25 +6,23 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import InformationsForm from "./InformationsForm";
+import FormBooking from "./FormBooking";
 
 interface Attendee {
   firstName: string;
   lastName: string;
-  email: string;
 }
 
-export default function FormBooking({
+export default function InformationBooking({
   quantity,
   setQuantity,
 }: {
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const [phone, setPhone] = useState("");
   const [attendeSelect, setAttendeeSelect] = useState<string>("1");
   const [attendees, setAttendees] = useState<Attendee[]>([
-    { firstName: "", lastName: "", email: "" },
+    { firstName: "", lastName: ""},
   ]);
 
   const HandleAddQuantity = () => {
@@ -38,7 +36,7 @@ export default function FormBooking({
   const handleAttendeeChange = (
     index: number,
     field: keyof Attendee,
-    value: string
+    value: string,
   ) => {
     const newAttendees = [...attendees];
     newAttendees[index] = { ...newAttendees[index], [field]: value };
@@ -50,13 +48,13 @@ export default function FormBooking({
     if (additionalParticipants > attendees.length) {
       const newAttendees = [...attendees];
       for (let i = attendees.length; i < additionalParticipants; i++) {
-        newAttendees.push({ firstName: "", lastName: "", email: "" });
+        newAttendees.push({ firstName: "", lastName: ""});
       }
       setAttendees(newAttendees);
     } else if (additionalParticipants < attendees.length) {
       setAttendees(attendees.slice(0, additionalParticipants));
     }
-  }, [quantity]);
+  }, [attendees, quantity]);
 
   return (
     <div className="flex flex-col items-start justify-start gap-4 w-full h-full">
@@ -69,7 +67,7 @@ export default function FormBooking({
             <span className="text-lg text-zinc-600 font-bold">
               Place standard
             </span>
-            <span className="text-sm text-zinc-500">45€ TTC / personne</span>
+            <span className="text-sm text-zinc-500">29€ TTC / personne</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -99,7 +97,7 @@ export default function FormBooking({
         </span>
       </div>
 
-      <InformationsForm attendees={attendees} quantity={quantity} />
+      <FormBooking attendees={attendees} quantity={quantity} />
 
       {quantity > 1 && (
         <div className="flex flex-col items-center w-full py-4 gap-4">
@@ -146,7 +144,7 @@ export default function FormBooking({
                           handleAttendeeChange(
                             index,
                             "lastName",
-                            e.target.value
+                            e.target.value,
                           )
                         }
                         required
@@ -164,25 +162,12 @@ export default function FormBooking({
                           handleAttendeeChange(
                             index,
                             "firstName",
-                            e.target.value
+                            e.target.value,
                           )
                         }
                         required
                       />
                     </div>
-                  </div>
-                  <div className="flex flex-col items-start flex-1 gap-2">
-                    <Label htmlFor={"email-" + index} className="text-lg">
-                      Email
-                    </Label>
-                    <Input
-                      id={"email-" + index}
-                      value={item.email}
-                      onChange={(e) =>
-                        handleAttendeeChange(index, "email", e.target.value)
-                      }
-                      required
-                    />
                   </div>
                 </TabsContent>
               );

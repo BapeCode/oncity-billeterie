@@ -8,7 +8,7 @@ export default function Overview({ quantity }: { quantity: number }) {
         Résumé de la commande
       </span>
       <span className="text-neutral-400 font-bold text-md">
-        Soirée en blanc avec Lyon 6ème & OnCity
+        Soirée en année 1925 avec Lyon 6ème & OnCity
       </span>
 
       <div className="flex flex-col items-start mt-5 w-full">
@@ -17,7 +17,7 @@ export default function Overview({ quantity }: { quantity: number }) {
           <span className="text-xl font-bold text-zinc-600">Date</span>
         </div>
         <span className="ml-8 font-medium text-zinc-500 text-lg">
-          17 Juin 2025
+          17 Décembre 2025
         </span>
       </div>
 
@@ -27,7 +27,7 @@ export default function Overview({ quantity }: { quantity: number }) {
           <span className="text-xl font-bold text-zinc-600">Horaire</span>
         </div>
         <span className="ml-8 font-medium text-zinc-500 text-lg">
-          19:30 - 01:00
+          21:00 à 2:00
         </span>
       </div>
 
@@ -37,7 +37,7 @@ export default function Overview({ quantity }: { quantity: number }) {
           <span className="text-xl font-bold text-zinc-600">Lieu</span>
         </div>
         <span className="ml-8 font-medium text-zinc-500 text-lg">
-          Café du Pond, 11 Pl. Maréchal Lyautey, 69006 Lyon
+          Gare des Brotteaux, Members, 13 ter Place Jules Ferry, 69006 Lyon
         </span>
       </div>
 
@@ -50,7 +50,7 @@ export default function Overview({ quantity }: { quantity: number }) {
         <div className="flex items-center justify-between w-full">
           <span className="text-zinc-400">Prix TTC</span>
           <span className="text-primary font-bold text-xl">
-            {quantity * 45}€
+            {quantity * 29}€
           </span>
         </div>
       </div>
@@ -60,7 +60,7 @@ export default function Overview({ quantity }: { quantity: number }) {
           En cas de problème
         </span>
         <span className="text-zinc-600 text-sm text-center">
-          Veuillez nous contacter à l'adresse suivante : <br />
+          Veuillez nous contacter à l&apos;adresse suivante : <br />
           <strong>hello@oncity.fr</strong> <br />
           ou par téléphone :<br />
           <strong>06.19.45.38.26</strong>
