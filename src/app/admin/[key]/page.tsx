@@ -17,11 +17,11 @@ export default async function Page({ params }: { params: { key: string } }) {
       <Navigation />
       <div className="max-w-7xl p-6 mx-auto w-full">
         <AdminTitle
-          participantsCount={query.data?.partipantCount}
-          paymentCount={query.data?.paymentCount}
-          totalAmount={query.data?.totalAmount}
+          participantsCount={query.data?.partipantCount || 0}
+          paymentCount={query.data?.paymentCount || 0}
+          totalAmount={query.data?.totalAmount || 0}
         />
-        <ListParticipants orders={query.data?.data} />
+        <ListParticipants orders={query.data?.data || []} />
       </div>
     </main>
   );
