@@ -102,7 +102,7 @@ export default function SuccessPage() {
       doc.setFontSize(12);
       const inclus = [
         "Accès à la soirée privée",
-        "Une boisson offerte",
+        "Un cocktail offert (alcoolisé ou non)",
         "Participation aux concours d'élégance",
       ];
       inclus.forEach((line, idx) => {
