@@ -107,6 +107,10 @@ export default function Informations() {
                     Tenue dans le thème 1925 (Années folles) obligatoire
                   </span>
                 </li>
+                 <li className="flex items-center gap-2">
+                  <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
+                  <span>Le masque sera fourni à l'entrée de l'événement</span>
+                </li>
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
                   <span>Accès uniquement sur réservation</span>
