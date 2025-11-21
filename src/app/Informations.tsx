@@ -85,7 +85,7 @@ export default function Informations() {
                 <li className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
                   <span>
-                    Un cocktail offert (alcoolisé ou non)
+                    Un cocktail (alcoolisé ou non)
                   </span>
                 </li>
                 <li className="flex items-center gap-2">
