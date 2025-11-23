@@ -35,9 +35,8 @@ export default function Page() {
             Une pièce d&#39;identité valide pourra être exigée à l&#39;entrée.
             L&#39;accès à l&#39;événement est soumis à la présentation d&#39;un
             billet nominatif et d&#39;un <strong>QR code valide</strong>. Ce
-            billet est personnel, non échangeable et non remboursable. Une{" "}
-            <strong>tenue blanche est exigée</strong>. L&#39;accès pourra
-            être refusé à toute personne ne respectant pas le dress code, ou une
+            billet est personnel, non échangeable et non remboursable.. L&#39;accès pourra
+            être refusé à toute personne ne respectant pas le dress code, ou une
             majoration de <strong>60,00€</strong> pourra être demandée.
           </span>
         </div>
