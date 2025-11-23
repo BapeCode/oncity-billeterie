@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   const result = await prisma.$transaction(async (tx: any) => {
     const totalUsers = await tx.participant.count();
 
-    if (totalUsers + participantToAddCount > 150) {
+    if (totalUsers + participantToAddCount > 105) {
       throw new Error("PLACES_LIMIT_REACHED");
     }
 
