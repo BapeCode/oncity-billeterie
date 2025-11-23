@@ -35,9 +35,6 @@ export async function POST(req: Request) {
       32
     );
 
-    console.log(JSON.stringify(allParticipants));
-    console.log(generateAccessToken());
-
     const order = await tx.order.create({
       data: {
         firstName,
