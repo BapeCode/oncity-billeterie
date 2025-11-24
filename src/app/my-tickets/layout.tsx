@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "OnCity Soirée en blanc - Mes billets",
+  title: "OnCity Bal 1925 - Mes billets",
   description: "Mes billets",
 };
 
